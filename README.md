@@ -44,7 +44,7 @@ HKCU\Software\Policies\DriveMapper\Drives\<LETTER>\
 |-----------|------|-------------|
 | `Enabled` | DWORD (0/1) | Enables or disables the mapping |
 | `Path` | REG_SZ | UNC path (e.g. `\\server\\share`) |
-| `Name` | REG_SZ | Optional display name (best-effort) |
+| `Name` | REG_SZ | Optional Explorer display name |
 | `Reconnect` | DWORD (0/1) | Persistent mapping |
 
 ---
@@ -53,7 +53,7 @@ HKCU\Software\Policies\DriveMapper\Drives\<LETTER>\
 
 ### Per-User Execution
 
-DriveMapper runs via **Scheduled Tasks configured with `InteractiveToken`**, meaning:
+DriveMapper runs via **Scheduled Tasks registered for `BUILTIN\Users` with group logon**, meaning:
 
 - The task is created once, system-wide
 - At runtime, Windows executes it as the **currently logged-in user**
@@ -68,8 +68,8 @@ For each drive letter:
 
 - If the drive is already mapped to the correct path → **skip**
 - If policy is enabled and the drive is mapped to a different path → **remap to the policy path**
-- If `Enabled=0` → **remove mapping (if previously applied)**
-- If policy no longer exists → **remove mapping (if previously applied)**
+- If `Enabled=0` → **remove mapping if it still matches the previously applied path**
+- If policy no longer exists → **remove mapping if it still matches the previously applied path**
 
 Configured policy is authoritative for that drive letter. If policy enables a letter,
 DriveMapper will enforce the configured path even if the current mapping was created
@@ -83,7 +83,13 @@ HKCU\Software\DriveMapper\State\AppliedDrives
 ```
 
 This prevents accidental removal of user-managed drives when policy is disabled or
-removed for a drive letter.
+removed for a drive letter. If a user or another tool changes a DriveMapper-applied
+letter before cleanup, DriveMapper deletes only its saved state and leaves the current
+mapping alone.
+
+If `Name` is configured, DriveMapper writes the Explorer display name for the mapped
+UNC path. If `Name` is later cleared in policy, DriveMapper clears the custom display
+name.
 
 ---
 
@@ -203,6 +209,7 @@ This is the recommended mode for Intune. An explicit config path is still suppor
 ## Intune Deployment (Win32 App)
 
 1. Publish binaries as **self-contained single-file executables**
+   - Recommended: run `.\build.ps1`
 2. Package:
    - `Install.exe`
    - `DriveMapper.exe`
