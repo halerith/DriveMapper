@@ -16,6 +16,7 @@ namespace DriveMapper
         // Track what this tool last applied so we can safely remove mappings when policy keys disappear
         // (prevents us from unmapping drives we didn't create).
         private const string StateBaseKey = @"Software\DriveMapper\State\AppliedDrives";
+        private const string ExplorerMountPointsBaseKey = @"Software\Microsoft\Windows\CurrentVersion\Explorer\MountPoints2";
 
         // WNetAddConnection2 flags
         private const int CONNECT_UPDATE_PROFILE = 0x00000001; // persistent
@@ -100,9 +101,11 @@ namespace DriveMapper
                     effective.TryGetValue(letter, out var entry);
 
                     string? currentRemote = GetCurrentMappedRemote(letter); // null means not mapped
-                    string? currentLabel = GetCurrentDriveLabel(letter);    // may be null if not accessible
+                    string? normalizedCurrentRemote = NormalizeUncPath(currentRemote);
+                    string? currentLabel = GetCurrentDriveLabel(letter, currentRemote); // may be null if not accessible
 
-                    bool hadState = previouslyApplied.TryGetValue(letter, out _);
+                    bool hadState = previouslyApplied.TryGetValue(letter, out var appliedRemote);
+                    string? normalizedAppliedRemote = NormalizeUncPath(appliedRemote);
 
                     if (entry != null)
                     {
@@ -112,7 +115,7 @@ namespace DriveMapper
                             // Disabled => remove mapping if we previously applied it
                             if (hadState)
                             {
-                                RemoveMappingIfPresent(letter, currentRemote, reason: "Policy disabled");
+                                RemoveMappingIfStillOwned(letter, currentRemote, normalizedCurrentRemote, normalizedAppliedRemote, reason: "Policy disabled");
                                 DeleteAppliedState(letter);
                             }
                             else
@@ -128,35 +131,54 @@ namespace DriveMapper
                             EventLogger.Warn($"Policy mapping {letter}: is enabled but Path is empty; skipping.");
                             if (hadState)
                             {
-                                RemoveMappingIfPresent(letter, currentRemote, reason: "Policy enabled but Path missing");
+                                RemoveMappingIfStillOwned(letter, currentRemote, normalizedCurrentRemote, normalizedAppliedRemote, reason: "Policy enabled but Path missing");
                                 DeleteAppliedState(letter);
                             }
                             continue;
                         }
 
+                        string normalizedPolicyPath = NormalizeUncPath(entry.Path) ?? entry.Path.Trim();
+
                         // Decide if remap is needed
-                        bool pathMatches = currentRemote != null &&
-                                           currentRemote.Equals(entry.Path, StringComparison.OrdinalIgnoreCase);
+                        bool pathMatches = normalizedCurrentRemote != null &&
+                                           normalizedCurrentRemote.Equals(normalizedPolicyPath, StringComparison.OrdinalIgnoreCase);
 
-                        bool nameMatches = true; // default "not blocking" if we can't reliably determine label
-                        if (!string.IsNullOrWhiteSpace(entry.Name) && !string.IsNullOrWhiteSpace(currentLabel))
-                        {
-                            nameMatches = currentLabel.Equals(entry.Name, StringComparison.OrdinalIgnoreCase);
-                        }
+                        bool nameMatches = string.IsNullOrWhiteSpace(entry.Name) ||
+                                           (!string.IsNullOrWhiteSpace(currentLabel) &&
+                                            currentLabel.Equals(entry.Name, StringComparison.OrdinalIgnoreCase));
 
-                        if (pathMatches && nameMatches)
+                        if (pathMatches)
                         {
+                            if (string.IsNullOrWhiteSpace(entry.Name))
+                            {
+                                ClearDriveDisplayName(letter, entry.Path);
+                            }
+                            else if (!nameMatches)
+                            {
+                                SetDriveDisplayName(letter, entry.Path, entry.Name);
+                            }
+
                             // Already correct => nothing to do
-                            SaveAppliedState(letter, entry.Path);
+                            SaveAppliedState(letter, normalizedPolicyPath);
                             EventLogger.Info($"Skipped {letter}: already mapped to {entry.Path}.");
                             continue;
                         }
 
-                        // If currently mapped but wrong, remap
-                        MapDrive(letter, entry.Path, entry.Reconnect);
+                        // If currently mapped but wrong, remap.
+                        // Persist state only after Windows confirms the mapping succeeded.
+                        if (MapDrive(letter, entry.Path, entry.Reconnect))
+                        {
+                            if (!string.IsNullOrWhiteSpace(entry.Name))
+                            {
+                                SetDriveDisplayName(letter, entry.Path, entry.Name);
+                            }
+                            else
+                            {
+                                ClearDriveDisplayName(letter, entry.Path);
+                            }
 
-                        // Persist state so we can remove later if policy disappears
-                        SaveAppliedState(letter, entry.Path);
+                            SaveAppliedState(letter, normalizedPolicyPath);
+                        }
                     }
                     else
                     {
@@ -164,7 +186,7 @@ namespace DriveMapper
                         // Only remove if we previously applied it (tracked state).
                         if (hadState)
                         {
-                            RemoveMappingIfPresent(letter, currentRemote, reason: "Policy no longer defines mapping");
+                            RemoveMappingIfStillOwned(letter, currentRemote, normalizedCurrentRemote, normalizedAppliedRemote, reason: "Policy no longer defines mapping");
                             DeleteAppliedState(letter);
                         }
                     }
@@ -292,7 +314,7 @@ namespace DriveMapper
                     char c = char.ToUpperInvariant(name[0]);
                     if (c < 'A' || c > 'Z') continue;
 
-                    var val = stateKey.GetValue(name, "") as string ?? "";
+                    var val = NormalizeUncPath(stateKey.GetValue(name, "") as string);
                     if (!string.IsNullOrWhiteSpace(val))
                         result[c.ToString()] = val;
                 }
@@ -311,7 +333,7 @@ namespace DriveMapper
             {
                 using var baseKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64);
                 using var stateKey = baseKey.CreateSubKey(StateBaseKey, writable: true);
-                stateKey?.SetValue(driveLetter.ToUpperInvariant(), remotePath ?? "", RegistryValueKind.String);
+                stateKey?.SetValue(driveLetter.ToUpperInvariant(), NormalizeUncPath(remotePath) ?? "", RegistryValueKind.String);
             }
             catch (Exception ex)
             {
@@ -337,7 +359,7 @@ namespace DriveMapper
         // Mapping / Unmapping logic
         // ----------------------------
 
-        private static void MapDrive(string driveLetter, string remotePath, bool reconnect)
+        private static bool MapDrive(string driveLetter, string remotePath, bool reconnect)
         {
             // Remove existing mapping first (force)
             WNetCancelConnection2(driveLetter + ":", 0, true);
@@ -356,10 +378,12 @@ namespace DriveMapper
             if (result != 0)
             {
                 EventLogger.Error($"Failed to map drive {driveLetter}: to {remotePath}. Error code: {result}");
+                return false;
             }
             else
             {
                 EventLogger.Info($"Mapped {driveLetter}: -> {remotePath} (Reconnect={(reconnect ? "Yes" : "No")})");
+                return true;
             }
         }
 
@@ -377,6 +401,37 @@ namespace DriveMapper
             {
                 EventLogger.Info($"Removed {driveLetter}: (was {currentRemote}). Reason: {reason}");
             }
+        }
+
+        private static void RemoveMappingIfStillOwned(string driveLetter, string? currentRemote, string? normalizedCurrentRemote, string? normalizedAppliedRemote, string reason)
+        {
+            if (currentRemote == null)
+                return;
+
+            if (string.IsNullOrWhiteSpace(normalizedAppliedRemote) ||
+                !string.Equals(normalizedCurrentRemote, normalizedAppliedRemote, StringComparison.OrdinalIgnoreCase))
+            {
+                EventLogger.Info($"Skipped removing {driveLetter}: current mapping is '{currentRemote}', but DriveMapper last applied '{normalizedAppliedRemote ?? ""}'. Reason: {reason}");
+                return;
+            }
+
+            RemoveMappingIfPresent(driveLetter, currentRemote, reason);
+        }
+
+        private static string? NormalizeUncPath(string? path)
+        {
+            if (string.IsNullOrWhiteSpace(path))
+                return null;
+
+            string normalized = path.Trim().Replace('/', '\\');
+
+            if (normalized.StartsWith(@"\\", StringComparison.Ordinal))
+            {
+                while (normalized.Length > 2 && normalized.EndsWith(@"\", StringComparison.Ordinal))
+                    normalized = normalized.Substring(0, normalized.Length - 1);
+            }
+
+            return normalized;
         }
 
         // Returns remote path if drive is currently mapped, else null
@@ -397,8 +452,35 @@ namespace DriveMapper
             return null;
         }
 
-        // Best-effort. For many network drives this may not be readable.
-        private static string? GetCurrentDriveLabel(string driveLetter)
+        // Best-effort. For mapped network drives, Explorer custom names live under MountPoints2.
+        private static string? GetCurrentDriveLabel(string driveLetter, string? remotePath)
+        {
+            var configuredName = GetConfiguredDriveDisplayName(remotePath);
+            if (!string.IsNullOrWhiteSpace(configuredName))
+                return configuredName;
+
+            return GetVolumeLabel(driveLetter);
+        }
+
+        private static string? GetConfiguredDriveDisplayName(string? remotePath)
+        {
+            if (string.IsNullOrWhiteSpace(remotePath))
+                return null;
+
+            try
+            {
+                using var baseKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64);
+                using var mountKey = baseKey.OpenSubKey(GetMountPoints2KeyPath(remotePath), writable: false);
+                return mountKey?.GetValue("_LabelFromReg", "") as string;
+            }
+            catch (Exception ex)
+            {
+                EventLogger.Warn($"Failed reading display name for {remotePath}: {ex.Message}");
+                return null;
+            }
+        }
+
+        private static string? GetVolumeLabel(string driveLetter)
         {
             try
             {
@@ -414,6 +496,51 @@ namespace DriveMapper
             }
         }
 
+        private static void SetDriveDisplayName(string driveLetter, string remotePath, string displayName)
+        {
+            if (string.IsNullOrWhiteSpace(displayName))
+                return;
+
+            try
+            {
+                using var baseKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64);
+                using var mountKey = baseKey.CreateSubKey(GetMountPoints2KeyPath(remotePath), writable: true);
+                mountKey?.SetValue("_LabelFromReg", displayName, RegistryValueKind.String);
+
+                SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, IntPtr.Zero, IntPtr.Zero);
+                EventLogger.Info($"Set display name for {driveLetter}: to '{displayName}'.");
+            }
+            catch (Exception ex)
+            {
+                EventLogger.Warn($"Failed setting display name for {driveLetter}: ({remotePath}) to '{displayName}': {ex.Message}");
+            }
+        }
+
+        private static void ClearDriveDisplayName(string driveLetter, string remotePath)
+        {
+            try
+            {
+                using var baseKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64);
+                using var mountKey = baseKey.OpenSubKey(GetMountPoints2KeyPath(remotePath), writable: true);
+                if (mountKey?.GetValue("_LabelFromReg", null) == null)
+                    return;
+
+                mountKey.DeleteValue("_LabelFromReg", throwOnMissingValue: false);
+                SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, IntPtr.Zero, IntPtr.Zero);
+                EventLogger.Info($"Cleared display name for {driveLetter}:.");
+            }
+            catch (Exception ex)
+            {
+                EventLogger.Warn($"Failed clearing display name for {driveLetter}: ({remotePath}): {ex.Message}");
+            }
+        }
+
+        private static string GetMountPoints2KeyPath(string remotePath)
+        {
+            string mountPointName = remotePath.TrimStart('\\').Replace('\\', '#');
+            return $@"{ExplorerMountPointsBaseKey}\##{mountPointName}";
+        }
+
         // ----------------------------
         // P/Invokes
         // ----------------------------
@@ -426,6 +553,12 @@ namespace DriveMapper
 
         [DllImport("mpr.dll", CharSet = CharSet.Unicode)]
         private static extern int WNetGetConnection(string localName, StringBuilder remoteName, ref int length);
+
+        private const int SHCNE_ASSOCCHANGED = 0x08000000;
+        private const int SHCNF_IDLIST = 0x0000;
+
+        [DllImport("shell32.dll")]
+        private static extern void SHChangeNotify(int wEventId, uint uFlags, IntPtr dwItem1, IntPtr dwItem2);
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         public class NETRESOURCE

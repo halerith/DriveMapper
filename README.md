@@ -18,6 +18,7 @@ This fork replaces JSON / AD group–based configuration with **registry values 
   - Copies files to a target directory
   - Creates scheduled tasks (logon + network change)
   - Creates the Event Log source used by DriveMapper
+  - Registers DriveMapper in Windows Apps & Features / Add or Remove Programs
   - Fully uninstallable
   - Designed for Intune Win32 deployment
 
@@ -66,17 +67,23 @@ DriveMapper runs via **Scheduled Tasks configured with `InteractiveToken`**, mea
 For each drive letter:
 
 - If the drive is already mapped to the correct path → **skip**
-- If mapped to a different path → **remap**
-- If `Enabled=0` → **remove mapping**
+- If policy is enabled and the drive is mapped to a different path → **remap to the policy path**
+- If `Enabled=0` → **remove mapping (if previously applied)**
 - If policy no longer exists → **remove mapping (if previously applied)**
 
-DriveMapper only removes drives it previously created, tracked per user under:
+Configured policy is authoritative for that drive letter. If policy enables a letter,
+DriveMapper will enforce the configured path even if the current mapping was created
+manually or by another tool.
+
+For cleanup scenarios, DriveMapper only removes drives it previously created, tracked
+per user under:
 
 ```
 HKCU\Software\DriveMapper\State\AppliedDrives
 ```
 
-This prevents accidental removal of user-managed drives.
+This prevents accidental removal of user-managed drives when policy is disabled or
+removed for a drive letter.
 
 ---
 
@@ -110,12 +117,23 @@ The Event Log source is created by the installer during install (admin required)
   - On network profile change (VPN / Wi-Fi / Ethernet)
 - Runs DriveMapper **as the logged-in user**
 - Creates the `DriveMapper` Event Log source
-- Writes version info to HKLM for Intune detection
+- Writes DriveMapper version info to HKLM for Intune detection
+- Registers an uninstall entry in Windows Apps & Features / Add or Remove Programs
+- Runs a GUI when launched without arguments
+- Runs silently when launched with command-line arguments
+- Add/Remove Programs launches the GUI; quiet uninstall remains available for management tools
 - Fully uninstallable
 
 ---
 
 ## Installer Configuration (`install.config.json`)
+
+The installer includes a default `install.config.json` as an embedded asset. If an
+`install.config.json` file exists next to `Install.exe`, that adjacent file is used
+as an override. During install and repair, the effective config is written into the
+target install directory. During upgrade, the package config is reconciled with the
+currently installed config: existing values are kept, missing current keys are added,
+and keys no longer defined by the package config are removed.
 
 Example:
 
@@ -124,7 +142,6 @@ Example:
   "TargetDirectory": "C:\\Program Files\\DriveMapper",
   "ExeName": "DriveMapper.exe",
   "ShortcutName": "",
-  "Version": "1",
   "ScheduledTasks": [
     {
       "TaskName": "DriveMapper",
@@ -144,8 +161,9 @@ Example:
 | `TargetDirectory` | Destination directory for binaries |
 | `ExeName` | Executable launched by scheduled tasks |
 | `ShortcutName` | Optional Start Menu shortcut |
-| `Version` | Written to HKLM for Intune detection |
 | `ScheduledTasks` | One or more task definitions |
+
+Version detection uses the file version of `DriveMapper.exe`, not a config value.
 
 ---
 
@@ -153,15 +171,32 @@ Example:
 
 Run from an **elevated prompt**:
 
+Launching `Install.exe` without arguments opens the installer GUI. If elevation is
+required, the installer prompts for UAC before performing the selected action.
+
 ### Install
 ```powershell
-Install.exe install.config.json install
+Install.exe install
+```
+
+### Upgrade
+```powershell
+Install.exe upgrade
+```
+
+### Repair
+```powershell
+Install.exe repair
 ```
 
 ### Uninstall
 ```powershell
-Install.exe install.config.json uninstall
+Install.exe uninstall
 ```
+
+When launched with arguments, the installer runs silently and returns an exit code.
+This is the recommended mode for Intune. An explicit config path is still supported:
+`Install.exe install.config.json install`.
 
 ---
 
@@ -171,13 +206,13 @@ Install.exe install.config.json uninstall
 2. Package:
    - `Install.exe`
    - `DriveMapper.exe`
-   - `install.config.json`
+   - Optional `install.config.json` if you need to override the embedded default
 3. Create `.intunewin` package
 4. Configure:
    - **Install command:**  
-     `Install.exe install.config.json install`
+     `Install.exe install`
    - **Uninstall command:**  
-     `Install.exe install.config.json uninstall`
+     `Install.exe uninstall`
    - **Detection rule:**  
      HKLM `SOFTWARE\<ExeNameWithoutExtension>\Version`
 

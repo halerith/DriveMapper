@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0-windows</TargetFramework>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
+    <UseWPF>true</UseWPF>
 
     <!-- Add these for self-contained single-file deployment -->
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
@@ -17,12 +18,7 @@
     <FileVersion>1.0.0.0</FileVersion>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="install.config.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="install.config.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <EmbeddedResource Include="..\Assets\install.config.json" LogicalName="install.config.json" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />

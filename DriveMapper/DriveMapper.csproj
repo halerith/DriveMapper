@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net8.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
+    <Nullable>enable</Nullable>
 
     <!-- New properties for self-contained single-file publishing -->
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
