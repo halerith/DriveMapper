@@ -134,12 +134,13 @@ The Event Log source is created by the installer during install (admin required)
 
 ## Installer Configuration (`install.config.json`)
 
-The installer includes a default `install.config.json` as an embedded asset. If an
-`install.config.json` file exists next to `Install.exe`, that adjacent file is used
-as an override. During install and repair, the effective config is written into the
-target install directory. During upgrade, the package config is reconciled with the
-currently installed config: existing values are kept, missing current keys are added,
-and keys no longer defined by the package config are removed.
+The installer includes a default `install.config.json` as an embedded asset, so no
+loose JSON file is required for normal installs. If an `install.config.json` file
+exists next to `Install.exe`, that adjacent file is used as an override. During
+install and repair, the effective config is written into the target install
+directory. During upgrade, the package config is reconciled with the currently
+installed config: existing values are kept, missing current keys are added, and
+keys no longer defined by the package config are removed.
 
 Example:
 
@@ -201,8 +202,9 @@ Install.exe uninstall
 ```
 
 When launched with arguments, the installer runs silently and returns an exit code.
-This is the recommended mode for Intune. An explicit config path is still supported:
-`Install.exe install.config.json install`.
+This is the recommended mode for Intune. The installer uses its embedded config by
+default. An explicit config path is supported only when you need an override, for
+example: `Install.exe install.config.json install`.
 
 ---
 
@@ -213,7 +215,7 @@ This is the recommended mode for Intune. An explicit config path is still suppor
 2. Package:
    - `Install.exe`
    - `DriveMapper.exe`
-   - Optional `install.config.json` if you need to override the embedded default
+   - Optional `install.config.json` only if you need to override the embedded default
 3. Create `.intunewin` package
 4. Configure:
    - **Install command:**  
