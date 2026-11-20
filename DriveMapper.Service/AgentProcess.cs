@@ -48,6 +48,13 @@ internal sealed class AgentProcess : IDisposable
 
     public bool HasExited => GetExitCodeProcess(process, out int code) ? code != 259 : throw new Win32Exception();
     public int ExitCode => GetExitCodeProcess(process, out int code) ? code : throw new Win32Exception();
+    public async Task StopAsync()
+    {
+        job.Dispose();
+        // Closing a kill-on-close job requests termination; wait for actual exit before the
+        // supervisor treats the user as idle and starts seeding/pruning ownership again.
+        while (!HasExited) await Task.Delay(100);
+    }
     public void Dispose() { job.Dispose(); process.Dispose(); }
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]

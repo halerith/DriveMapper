@@ -18,18 +18,35 @@ internal static class ServiceRegistration
             if (service.Status != ServiceControllerStatus.StopPending) service.Stop();
             service.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromSeconds(40));
         }
-        catch (InvalidOperationException ex) when (ex.InnerException is Win32Exception error && error.NativeErrorCode == 1060) { }
+        catch (InvalidOperationException ex) when (ex.InnerException is Win32Exception error && error.NativeErrorCode is 1060 or 1072) { }
+    }
+
+    public static void EnsureReadyForInstall() => ServiceLifecycle.EnsureReady(Probe, WaitForDeletion);
+
+    private static ServicePresence Probe()
+    {
+        using var service = new ServiceController(Product.ServiceName);
+        try { _ = service.Status; return ServicePresence.Present; }
+        catch (InvalidOperationException ex) when (ex.InnerException is Win32Exception error && error.NativeErrorCode is 1060 or 1072)
+        { return ((Win32Exception)ex.InnerException!).NativeErrorCode == 1060 ? ServicePresence.Missing : ServicePresence.PendingDeletion; }
+    }
+
+    private static bool WaitForDeletion()
+    {
+        var elapsed = Stopwatch.StartNew();
+        do
+        {
+            if (Probe() == ServicePresence.Missing) return true;
+            System.Threading.Thread.Sleep(200);
+        } while (elapsed.Elapsed < TimeSpan.FromSeconds(5));
+        return false;
     }
 
     public static void InstallAndStart(string directory)
     {
         string executable = Path.Combine(directory, Product.ServiceExe);
-        bool exists;
-        using (var service = new ServiceController(Product.ServiceName))
-        {
-            try { _ = service.Status; exists = true; }
-            catch (InvalidOperationException ex) when (ex.InnerException is Win32Exception error && error.NativeErrorCode == 1060) { exists = false; }
-        }
+        EnsureReadyForInstall();
+        bool exists = Probe() == ServicePresence.Present;
         Run(exists ? "config" : "create", Product.ServiceName, "binPath=", "\"" + executable + "\"",
             "start=", "auto", "obj=", "LocalSystem", "DisplayName=", Product.DisplayName);
         Run("description", Product.ServiceName, "Launches short-lived DriveMapper Agents in user sessions and schedules policy recovery.");
@@ -40,10 +57,10 @@ internal static class ServiceRegistration
         installed.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(30));
     }
 
-    public static void Remove()
+    public static bool Remove()
     {
         Stop();
-        RunAllowMissing("delete", Product.ServiceName);
+        return ServiceLifecycle.Remove(Probe, () => RunAllowMissing("delete", Product.ServiceName), WaitForDeletion);
     }
 
     private static void Run(params string[] arguments) => RunCore(false, arguments);
@@ -61,7 +78,8 @@ internal static class ServiceRegistration
         var error = process.StandardError.ReadToEndAsync();
         if (!process.WaitForExit(30000)) { process.Kill(); throw new IOException("Service Control timed out."); }
         string details = output.GetAwaiter().GetResult() + error.GetAwaiter().GetResult();
-        if (process.ExitCode != 0 && !(allowMissing && process.ExitCode == 1060))
+        if (process.ExitCode == 1072 && !allowMissing) throw new ServicePendingDeletionException();
+        if (process.ExitCode != 0 && !(allowMissing && process.ExitCode is 1060 or 1072))
             throw new IOException($"Service Control failed ({process.ExitCode}): {details}");
     }
 }

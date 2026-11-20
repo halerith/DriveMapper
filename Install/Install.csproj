@@ -19,6 +19,7 @@
   <ItemGroup>
     <Resource Include="../Assets/installer.ico" Link="installer.ico" />
     <EmbeddedResource Include="..\Assets\install.config.json" LogicalName="install.config.json" />
+    <EmbeddedResource Include="$(PayloadManifestPath)" LogicalName="DriveMapper.PayloadManifest.json" Condition="'$(PayloadManifestPath)' != ''" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="TaskScheduler" Version="2.12.2" />

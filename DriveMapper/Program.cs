@@ -23,6 +23,7 @@ internal static class Program
         }
         try
         {
+            using var executionDeadline = new ExecutionDeadline(TimeSpan.FromMinutes(3));
             var user = UserContext.Current();
             using var identity = WindowsIdentity.GetCurrent();
             if (new WindowsPrincipal(identity).IsInRole(WindowsBuiltInRole.Administrator))
@@ -41,30 +42,28 @@ internal static class Program
 
             ReconciliationResult result;
             // Same-user sessions share the remembered profile. Serialize their writes, while storing active ownership separately.
-            using var mutex = new Mutex(false, @"Global\DriveMapper-" + user.Sid);
-            bool acquired;
-            try { acquired = mutex.WaitOne(0); }
-            catch (AbandonedMutexException) { acquired = true; }
-            if (!acquired)
             {
-                result = new ReconciliationResult { Deferred = 1 };
-                result.Drives.Add(new("*", OutcomeKind.Deferred, "Another Agent for this user is running."));
-            }
-            else
-            {
-                try
+                using var stateLock = UserStateLock.TryAcquire(user.Sid);
+                if (stateLock == null)
                 {
-                    SessionOwnership.Prepare(user.Sid, new[] { user.LogonId });
-                    result = new DriveReconciler(new RegistryPolicySource(), new RegistryStateStore(user.LogonId),
-                        new WindowsNetworkMappings(), new ExplorerLabels(), serviceMode ? new AgentLog(log) : log)
-                        .Run(request.Letters == null ? null : new HashSet<string>(request.Letters, StringComparer.OrdinalIgnoreCase));
+                    result = new ReconciliationResult { Deferred = 1 };
+                    result.Drives.Add(new("*", OutcomeKind.Deferred, "Another Agent for this user is running."));
                 }
-                catch (Exception ex)
+                else
                 {
-                    result = new ReconciliationResult { Failed = 1 };
-                    result.Drives.Add(new("*", OutcomeKind.TransientFailure, ex.Message));
+                    try
+                    {
+                        SessionOwnership.Prepare(user.Sid, new[] { user.LogonId });
+                        result = new DriveReconciler(new RegistryPolicySource(), new RegistryStateStore(user.LogonId),
+                            new WindowsNetworkMappings(), new ExplorerLabels(), serviceMode ? new AgentLog(log) : log)
+                            .Run(request.Letters == null ? null : new HashSet<string>(request.Letters, StringComparer.OrdinalIgnoreCase));
+                    }
+                    catch (Exception ex)
+                    {
+                        result = new ReconciliationResult { Failed = 1 };
+                        result.Drives.Add(new("*", OutcomeKind.TransientFailure, ex.Message));
+                    }
                 }
-                finally { mutex.ReleaseMutex(); }
             }
             if (pipe != null)
                 await PipeWire.WriteAsync(pipe, new AgentReport(user.SessionId, user.Sid, user.LogonId, result.Drives), deadline.Token);

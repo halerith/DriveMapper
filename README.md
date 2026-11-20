@@ -40,7 +40,7 @@ For detection, use the **64-bit** registry key `HKEY_LOCAL_MACHINE\SOFTWARE\Driv
 2. Create an imported administrative templates profile and enable the required drive-letter policies.
 3. Enter each UNC path, optional display name and reconnect setting, then assign the profile to users.
 
-Users need network access and permission to the shares. Allow approximately 60 seconds for policy changes. The templates are separate from the app ZIP; existing v1 profiles must be recreated using v2.
+Users need network access and permission to the shares. Allow approximately 60 seconds for policy changes. The ZIP includes the templates in its `ADMX` folder; existing v1 profiles must be recreated using v2.
 
 Disabling or withdrawing a policy removes its previously managed mapping. Changing or removing a drive can force a disconnect, including open files. Avoid overlapping v1/v2 policies for the same drive letter.
 

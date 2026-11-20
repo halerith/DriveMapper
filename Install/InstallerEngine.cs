@@ -43,6 +43,7 @@ internal static class InstallerEngine
                 if (oldVersion != null && Version.Parse(oldVersion) > Version.Parse(version))
                     return new(1638, "A newer Halerith DriveMapper version is already installed.");
                 InstallLog.Write($"Package {version}; installed {oldVersion ?? "none"}; destination {target}.");
+                ServiceRegistration.EnsureReadyForInstall();
                 reboot |= RetiredFiles.CleanupLeftovers(target, self, InstallLog.Write, stage);
                 progress?.Invoke("Stopping Halerith DriveMapper…");
                 ServiceRegistration.Stop();
@@ -86,7 +87,7 @@ internal static class InstallerEngine
 
             progress?.Invoke("Stopping and removing Halerith DriveMapper…");
             reboot |= RetiredFiles.CleanupLeftovers(target, self, InstallLog.Write);
-            ServiceRegistration.Remove();
+            reboot |= ServiceRegistration.Remove();
             LegacyTasks.Remove(target, installed.LegacyTaskNames, InstallLog.Write);
             // Prepare the helper image from the retired installer when uninstalling itself.
             string removed = FileDeployment.Retire(target, InstallSafety.SecureDirectory);
@@ -105,6 +106,12 @@ internal static class InstallerEngine
             else InstallLog.TryWrite("Uninstall completed. User ownership and logs retained; drive mappings were not changed.");
             return Completed(reboot, force ? "Halerith DriveMapper and its settings/logging data removed. Drive mappings were left unchanged."
                 : "Halerith DriveMapper removed. Logs and user ownership records retained. Drive mappings were left unchanged.");
+        }
+        catch (ServicePendingDeletionException error)
+        {
+            InstallRegistration.WithholdDetection();
+            InstallLog.TryWrite(error.Message);
+            return new(3010, error.Message);
         }
         catch (Exception error)
         {
@@ -126,21 +133,5 @@ internal static class InstallerEngine
         => new(reboot ? 3010 : 0, message + (reboot ? "\n\nRestart required to finish file cleanup." : ""));
 
     internal static string ValidatePayload(string stage)
-    {
-        foreach (string name in FileDeployment.PayloadNames.Where(name => name.EndsWith(".exe")))
-        {
-            using var reader = new BinaryReader(File.OpenRead(Path.Combine(stage, name)));
-            if (reader.BaseStream.Length < 64 || reader.ReadUInt16() != 0x5A4D) throw new InvalidDataException("Invalid executable: " + name);
-            reader.BaseStream.Position = 0x3C;
-            int offset = reader.ReadInt32();
-            if (offset < 64 || offset > reader.BaseStream.Length - 6) throw new InvalidDataException("Invalid PE header: " + name);
-            reader.BaseStream.Position = offset;
-            if (reader.ReadUInt32() != 0x00004550 || reader.ReadUInt16() != 0x8664) throw new InvalidDataException("A win-x64 executable is required: " + name);
-        }
-        string? agent = FileVersionInfo.GetVersionInfo(Path.Combine(stage, Product.AgentExe)).FileVersion;
-        string? service = FileVersionInfo.GetVersionInfo(Path.Combine(stage, Product.ServiceExe)).FileVersion;
-        if (!Version.TryParse(agent, out var agentVersion) || !Version.TryParse(service, out var serviceVersion) || agentVersion != serviceVersion)
-            throw new InvalidDataException("Agent and Service must have matching valid versions.");
-        return agent!;
-    }
+        => PayloadValidation.Validate(stage);
 }

@@ -11,7 +11,8 @@ internal static class SessionOwnership
     public static string SessionKey(string logonId) => Root + @"\Sessions\" + logonId;
     public const string Remembered = Root + @"\RememberedDrives";
 
-    // Called for ALL discovered sessions of a user before any Agent starts. Each gets its own cleanup snapshot.
+    // Caller must hold UserStateLock. The supervisor supplies ALL discovered sessions of a
+    // user before any Agent starts; each gets its own cleanup snapshot.
     public static void Prepare(string sid, IEnumerable<string> logonIds, bool pruneInactive = false)
     {
         using var users = RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry64);

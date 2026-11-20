@@ -73,7 +73,7 @@ internal sealed class MappingService : ServiceBase
     {
         var sessions = new Dictionary<int, Session>();
         var watchers = new Dictionary<string, PolicyWatcher>();
-        var agents = new List<Task>();
+        var agents = new UserAgentTasks();
         DateTimeOffset inventoryAt = DateTimeOffset.MinValue;
         string? lastError = null;
         var detectionErrors = new Dictionary<string, string>();
@@ -85,6 +85,7 @@ internal sealed class MappingService : ServiceBase
                 var now = DateTimeOffset.UtcNow;
                 try
                 {
+                    agents.RemoveCompleted();
                     if (now >= inventoryAt || Interlocked.Exchange(ref sessionChanged, 0) != 0)
                     {
                         inventoryAt = now.AddSeconds(15);
@@ -94,10 +95,12 @@ internal sealed class MappingService : ServiceBase
                         foreach (var group in discovered.GroupBy(user => user.Sid))
                         {
                             var additions = group.Where(user => !sessions.ContainsKey(user.SessionId)).ToArray();
-                            if (sessions.Values.Any(s => s.User.Sid == group.Key && s.Schedule.IsRunning)) continue;
+                            if (agents.IsRunning(group.Key)) continue;
                             // Initialize all same-user sessions before any Agent changes shared remembered ownership.
                             try
                             {
+                                using var stateLock = UserStateLock.TryAcquire(group.Key);
+                                if (stateLock == null) continue; // A manual Agent may own the same user state.
                                 SessionOwnership.Prepare(group.Key, group.Select(user => user.LogonId), WindowsSessions.InventoryComplete);
                                 foreach (var user in additions) sessions[user.SessionId] = new Session(user, now, stop);
                                 detectionErrors.Remove("state:" + group.Key);
@@ -148,11 +151,12 @@ internal sealed class MappingService : ServiceBase
                             session.Last[outcome.Letter] = outcome;
                         }
                     }
-                    agents.RemoveAll(task => task.IsCompleted);
+                    agents.RemoveCompleted();
                     foreach (var session in sessions.Values)
                     {
                         if (agents.Count >= 4) break;
-                        if (sessions.Values.Any(other => other.User.Sid == session.User.Sid && other.Schedule.IsRunning)) continue;
+                        if (agents.IsRunning(session.User.Sid) ||
+                            sessions.Values.Any(other => other.User.Sid == session.User.Sid && other.Schedule.IsRunning)) continue;
                         var request = session.Schedule.TakeDue(now);
                         if (request == null) continue;
                         var lifetime = session.Lifetime.Token;
@@ -165,7 +169,7 @@ internal sealed class MappingService : ServiceBase
                             catch (Exception ex) { outcomes = new[] { new DriveOutcome("*", OutcomeKind.TransientFailure, ex.Message) }; }
                             completed.Enqueue((session, outcomes));
                         }, CancellationToken.None);
-                        agents.Add(session.Agent);
+                        agents.Track(session.User.Sid, session.Agent);
                     }
                     lastError = null;
                 }
@@ -187,7 +191,7 @@ internal sealed class MappingService : ServiceBase
         {
             foreach (var session in sessions.Values) session.Dispose();
             foreach (var watcher in watchers.Values) watcher.Dispose();
-            await Task.WhenAll(agents);
+            await agents.DrainAsync();
         }
 
         void DetectionError(string key, Exception error)
