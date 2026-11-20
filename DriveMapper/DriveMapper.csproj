@@ -1,8 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFramework>net10.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
     <Nullable>enable</Nullable>
+    <AssemblyName>DriveMapper-Agent</AssemblyName>
 
     <!-- New properties for self-contained single-file publishing -->
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
@@ -11,18 +12,13 @@
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract> <!-- optional -->
     <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile> <!-- optional -->
 
-    <AssemblyTitle>DriveMapper</AssemblyTitle>
-    <Product>DriveMapper</Product>
-    <Copyright>Copyright ©  2026</Copyright>
-    <Version>1.2.0.0</Version>
-    <AssemblyVersion>1.2.0.0</AssemblyVersion>
-    <FileVersion>1.2.0.0</FileVersion>
+    <AssemblyTitle>Halerith DriveMapper Agent</AssemblyTitle>
+    <ApplicationIcon>../Assets/drivemapper.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="9.0.5" />
+    <PackageReference Include="System.Diagnostics.EventLog" Version="10.0.15" />
+    <Compile Include="../Shared/*.cs" Link="Shared/%(Filename)%(Extension)" />
   </ItemGroup>
 
 </Project>

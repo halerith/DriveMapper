@@ -361,3 +361,18 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# DriveMapper release outputs and isolated compiler/package work
+/build/
+/docs/
+/scripts/
+/tests/
+
+# Local IDE caches, backup projects and packaged binaries
+*.lscache
+*.old
+*.bak
+*.exe
+*.dll
+*.zip
+*.intunewin

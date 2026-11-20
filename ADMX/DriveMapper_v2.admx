@@ -1,0 +1,589 @@
+<?xml version='1.0' encoding='utf-8'?>
+<policyDefinitions revision="1.0" schemaVersion="1.0">
+  <policyNamespaces>
+    <target prefix="drivemapper_v2" namespace="DriveMapper_v2.Policies" />
+  </policyNamespaces>
+  <resources minRequiredRevision="1.0" />
+  <supportedOn>
+    <definitions>
+      <definition name="DriveMapperSupported" displayName="$(string.Supported)" />
+    </definitions>
+  </supportedOn>
+  <categories>
+    <category name="DriveMapper_v2" displayName="$(string.Category)" />
+  </categories>
+  <policies>
+    <policy name="DriveMapper_v2_Map_A" class="User" displayName="$(string.DriveMapper_v2_Map_A)" explainText="$(string.DriveMapper_v2_Map_A_Help)" presentation="$(presentation.DriveMapper_v2_Map_A)" key="Software\Policies\DriveMapper\Drives\A" valueName="Enabled">
+      <parentCategory ref="DriveMapper_v2" />
+      <supportedOn ref="DriveMapperSupported" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <text id="DriveMapper_v2_Map_A_Path" valueName="Path" required="true" />
+        <text id="DriveMapper_v2_Map_A_Name" valueName="Name" required="false" />
+        <boolean id="DriveMapper_v2_Map_A_Reconnect" valueName="Reconnect">
+          <trueValue>
+            <decimal value="1" />
+          </trueValue>
+          <falseValue>
+            <decimal value="0" />
+          </falseValue>
+        </boolean>
+      </elements>
+    </policy>
+    <policy name="DriveMapper_v2_Map_B" class="User" displayName="$(string.DriveMapper_v2_Map_B)" explainText="$(string.DriveMapper_v2_Map_B_Help)" presentation="$(presentation.DriveMapper_v2_Map_B)" key="Software\Policies\DriveMapper\Drives\B" valueName="Enabled">
+      <parentCategory ref="DriveMapper_v2" />
+      <supportedOn ref="DriveMapperSupported" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <text id="DriveMapper_v2_Map_B_Path" valueName="Path" required="true" />
+        <text id="DriveMapper_v2_Map_B_Name" valueName="Name" required="false" />
+        <boolean id="DriveMapper_v2_Map_B_Reconnect" valueName="Reconnect">
+          <trueValue>
+            <decimal value="1" />
+          </trueValue>
+          <falseValue>
+            <decimal value="0" />
+          </falseValue>
+        </boolean>
+      </elements>
+    </policy>
+    <policy name="DriveMapper_v2_Map_C" class="User" displayName="$(string.DriveMapper_v2_Map_C)" explainText="$(string.DriveMapper_v2_Map_C_Help)" presentation="$(presentation.DriveMapper_v2_Map_C)" key="Software\Policies\DriveMapper\Drives\C" valueName="Enabled">
+      <parentCategory ref="DriveMapper_v2" />
+      <supportedOn ref="DriveMapperSupported" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <text id="DriveMapper_v2_Map_C_Path" valueName="Path" required="true" />
+        <text id="DriveMapper_v2_Map_C_Name" valueName="Name" required="false" />
+        <boolean id="DriveMapper_v2_Map_C_Reconnect" valueName="Reconnect">
+          <trueValue>
+            <decimal value="1" />
+          </trueValue>
+          <falseValue>
+            <decimal value="0" />
+          </falseValue>
+        </boolean>
+      </elements>
+    </policy>
+    <policy name="DriveMapper_v2_Map_D" class="User" displayName="$(string.DriveMapper_v2_Map_D)" explainText="$(string.DriveMapper_v2_Map_D_Help)" presentation="$(presentation.DriveMapper_v2_Map_D)" key="Software\Policies\DriveMapper\Drives\D" valueName="Enabled">
+      <parentCategory ref="DriveMapper_v2" />
+      <supportedOn ref="DriveMapperSupported" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <text id="DriveMapper_v2_Map_D_Path" valueName="Path" required="true" />
+        <text id="DriveMapper_v2_Map_D_Name" valueName="Name" required="false" />
+        <boolean id="DriveMapper_v2_Map_D_Reconnect" valueName="Reconnect">
+          <trueValue>
+            <decimal value="1" />
+          </trueValue>
+          <falseValue>
+            <decimal value="0" />
+          </falseValue>
+        </boolean>
+      </elements>
+    </policy>
+    <policy name="DriveMapper_v2_Map_E" class="User" displayName="$(string.DriveMapper_v2_Map_E)" explainText="$(string.DriveMapper_v2_Map_E_Help)" presentation="$(presentation.DriveMapper_v2_Map_E)" key="Software\Policies\DriveMapper\Drives\E" valueName="Enabled">
+      <parentCategory ref="DriveMapper_v2" />
+      <supportedOn ref="DriveMapperSupported" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <text id="DriveMapper_v2_Map_E_Path" valueName="Path" required="true" />
+        <text id="DriveMapper_v2_Map_E_Name" valueName="Name" required="false" />
+        <boolean id="DriveMapper_v2_Map_E_Reconnect" valueName="Reconnect">
+          <trueValue>
+            <decimal value="1" />
+          </trueValue>
+          <falseValue>
+            <decimal value="0" />
+          </falseValue>
+        </boolean>
+      </elements>
+    </policy>
+    <policy name="DriveMapper_v2_Map_F" class="User" displayName="$(string.DriveMapper_v2_Map_F)" explainText="$(string.DriveMapper_v2_Map_F_Help)" presentation="$(presentation.DriveMapper_v2_Map_F)" key="Software\Policies\DriveMapper\Drives\F" valueName="Enabled">
+      <parentCategory ref="DriveMapper_v2" />
+      <supportedOn ref="DriveMapperSupported" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <text id="DriveMapper_v2_Map_F_Path" valueName="Path" required="true" />
+        <text id="DriveMapper_v2_Map_F_Name" valueName="Name" required="false" />
+        <boolean id="DriveMapper_v2_Map_F_Reconnect" valueName="Reconnect">
+          <trueValue>
+            <decimal value="1" />
+          </trueValue>
+          <falseValue>
+            <decimal value="0" />
+          </falseValue>
+        </boolean>
+      </elements>
+    </policy>
+    <policy name="DriveMapper_v2_Map_G" class="User" displayName="$(string.DriveMapper_v2_Map_G)" explainText="$(string.DriveMapper_v2_Map_G_Help)" presentation="$(presentation.DriveMapper_v2_Map_G)" key="Software\Policies\DriveMapper\Drives\G" valueName="Enabled">
+      <parentCategory ref="DriveMapper_v2" />
+      <supportedOn ref="DriveMapperSupported" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <text id="DriveMapper_v2_Map_G_Path" valueName="Path" required="true" />
+        <text id="DriveMapper_v2_Map_G_Name" valueName="Name" required="false" />
+        <boolean id="DriveMapper_v2_Map_G_Reconnect" valueName="Reconnect">
+          <trueValue>
+            <decimal value="1" />
+          </trueValue>
+          <falseValue>
+            <decimal value="0" />
+          </falseValue>
+        </boolean>
+      </elements>
+    </policy>
+    <policy name="DriveMapper_v2_Map_H" class="User" displayName="$(string.DriveMapper_v2_Map_H)" explainText="$(string.DriveMapper_v2_Map_H_Help)" presentation="$(presentation.DriveMapper_v2_Map_H)" key="Software\Policies\DriveMapper\Drives\H" valueName="Enabled">
+      <parentCategory ref="DriveMapper_v2" />
+      <supportedOn ref="DriveMapperSupported" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <text id="DriveMapper_v2_Map_H_Path" valueName="Path" required="true" />
+        <text id="DriveMapper_v2_Map_H_Name" valueName="Name" required="false" />
+        <boolean id="DriveMapper_v2_Map_H_Reconnect" valueName="Reconnect">
+          <trueValue>
+            <decimal value="1" />
+          </trueValue>
+          <falseValue>
+            <decimal value="0" />
+          </falseValue>
+        </boolean>
+      </elements>
+    </policy>
+    <policy name="DriveMapper_v2_Map_I" class="User" displayName="$(string.DriveMapper_v2_Map_I)" explainText="$(string.DriveMapper_v2_Map_I_Help)" presentation="$(presentation.DriveMapper_v2_Map_I)" key="Software\Policies\DriveMapper\Drives\I" valueName="Enabled">
+      <parentCategory ref="DriveMapper_v2" />
+      <supportedOn ref="DriveMapperSupported" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <text id="DriveMapper_v2_Map_I_Path" valueName="Path" required="true" />
+        <text id="DriveMapper_v2_Map_I_Name" valueName="Name" required="false" />
+        <boolean id="DriveMapper_v2_Map_I_Reconnect" valueName="Reconnect">
+          <trueValue>
+            <decimal value="1" />
+          </trueValue>
+          <falseValue>
+            <decimal value="0" />
+          </falseValue>
+        </boolean>
+      </elements>
+    </policy>
+    <policy name="DriveMapper_v2_Map_J" class="User" displayName="$(string.DriveMapper_v2_Map_J)" explainText="$(string.DriveMapper_v2_Map_J_Help)" presentation="$(presentation.DriveMapper_v2_Map_J)" key="Software\Policies\DriveMapper\Drives\J" valueName="Enabled">
+      <parentCategory ref="DriveMapper_v2" />
+      <supportedOn ref="DriveMapperSupported" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <text id="DriveMapper_v2_Map_J_Path" valueName="Path" required="true" />
+        <text id="DriveMapper_v2_Map_J_Name" valueName="Name" required="false" />
+        <boolean id="DriveMapper_v2_Map_J_Reconnect" valueName="Reconnect">
+          <trueValue>
+            <decimal value="1" />
+          </trueValue>
+          <falseValue>
+            <decimal value="0" />
+          </falseValue>
+        </boolean>
+      </elements>
+    </policy>
+    <policy name="DriveMapper_v2_Map_K" class="User" displayName="$(string.DriveMapper_v2_Map_K)" explainText="$(string.DriveMapper_v2_Map_K_Help)" presentation="$(presentation.DriveMapper_v2_Map_K)" key="Software\Policies\DriveMapper\Drives\K" valueName="Enabled">
+      <parentCategory ref="DriveMapper_v2" />
+      <supportedOn ref="DriveMapperSupported" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <text id="DriveMapper_v2_Map_K_Path" valueName="Path" required="true" />
+        <text id="DriveMapper_v2_Map_K_Name" valueName="Name" required="false" />
+        <boolean id="DriveMapper_v2_Map_K_Reconnect" valueName="Reconnect">
+          <trueValue>
+            <decimal value="1" />
+          </trueValue>
+          <falseValue>
+            <decimal value="0" />
+          </falseValue>
+        </boolean>
+      </elements>
+    </policy>
+    <policy name="DriveMapper_v2_Map_L" class="User" displayName="$(string.DriveMapper_v2_Map_L)" explainText="$(string.DriveMapper_v2_Map_L_Help)" presentation="$(presentation.DriveMapper_v2_Map_L)" key="Software\Policies\DriveMapper\Drives\L" valueName="Enabled">
+      <parentCategory ref="DriveMapper_v2" />
+      <supportedOn ref="DriveMapperSupported" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <text id="DriveMapper_v2_Map_L_Path" valueName="Path" required="true" />
+        <text id="DriveMapper_v2_Map_L_Name" valueName="Name" required="false" />
+        <boolean id="DriveMapper_v2_Map_L_Reconnect" valueName="Reconnect">
+          <trueValue>
+            <decimal value="1" />
+          </trueValue>
+          <falseValue>
+            <decimal value="0" />
+          </falseValue>
+        </boolean>
+      </elements>
+    </policy>
+    <policy name="DriveMapper_v2_Map_M" class="User" displayName="$(string.DriveMapper_v2_Map_M)" explainText="$(string.DriveMapper_v2_Map_M_Help)" presentation="$(presentation.DriveMapper_v2_Map_M)" key="Software\Policies\DriveMapper\Drives\M" valueName="Enabled">
+      <parentCategory ref="DriveMapper_v2" />
+      <supportedOn ref="DriveMapperSupported" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <text id="DriveMapper_v2_Map_M_Path" valueName="Path" required="true" />
+        <text id="DriveMapper_v2_Map_M_Name" valueName="Name" required="false" />
+        <boolean id="DriveMapper_v2_Map_M_Reconnect" valueName="Reconnect">
+          <trueValue>
+            <decimal value="1" />
+          </trueValue>
+          <falseValue>
+            <decimal value="0" />
+          </falseValue>
+        </boolean>
+      </elements>
+    </policy>
+    <policy name="DriveMapper_v2_Map_N" class="User" displayName="$(string.DriveMapper_v2_Map_N)" explainText="$(string.DriveMapper_v2_Map_N_Help)" presentation="$(presentation.DriveMapper_v2_Map_N)" key="Software\Policies\DriveMapper\Drives\N" valueName="Enabled">
+      <parentCategory ref="DriveMapper_v2" />
+      <supportedOn ref="DriveMapperSupported" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <text id="DriveMapper_v2_Map_N_Path" valueName="Path" required="true" />
+        <text id="DriveMapper_v2_Map_N_Name" valueName="Name" required="false" />
+        <boolean id="DriveMapper_v2_Map_N_Reconnect" valueName="Reconnect">
+          <trueValue>
+            <decimal value="1" />
+          </trueValue>
+          <falseValue>
+            <decimal value="0" />
+          </falseValue>
+        </boolean>
+      </elements>
+    </policy>
+    <policy name="DriveMapper_v2_Map_O" class="User" displayName="$(string.DriveMapper_v2_Map_O)" explainText="$(string.DriveMapper_v2_Map_O_Help)" presentation="$(presentation.DriveMapper_v2_Map_O)" key="Software\Policies\DriveMapper\Drives\O" valueName="Enabled">
+      <parentCategory ref="DriveMapper_v2" />
+      <supportedOn ref="DriveMapperSupported" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <text id="DriveMapper_v2_Map_O_Path" valueName="Path" required="true" />
+        <text id="DriveMapper_v2_Map_O_Name" valueName="Name" required="false" />
+        <boolean id="DriveMapper_v2_Map_O_Reconnect" valueName="Reconnect">
+          <trueValue>
+            <decimal value="1" />
+          </trueValue>
+          <falseValue>
+            <decimal value="0" />
+          </falseValue>
+        </boolean>
+      </elements>
+    </policy>
+    <policy name="DriveMapper_v2_Map_P" class="User" displayName="$(string.DriveMapper_v2_Map_P)" explainText="$(string.DriveMapper_v2_Map_P_Help)" presentation="$(presentation.DriveMapper_v2_Map_P)" key="Software\Policies\DriveMapper\Drives\P" valueName="Enabled">
+      <parentCategory ref="DriveMapper_v2" />
+      <supportedOn ref="DriveMapperSupported" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <text id="DriveMapper_v2_Map_P_Path" valueName="Path" required="true" />
+        <text id="DriveMapper_v2_Map_P_Name" valueName="Name" required="false" />
+        <boolean id="DriveMapper_v2_Map_P_Reconnect" valueName="Reconnect">
+          <trueValue>
+            <decimal value="1" />
+          </trueValue>
+          <falseValue>
+            <decimal value="0" />
+          </falseValue>
+        </boolean>
+      </elements>
+    </policy>
+    <policy name="DriveMapper_v2_Map_Q" class="User" displayName="$(string.DriveMapper_v2_Map_Q)" explainText="$(string.DriveMapper_v2_Map_Q_Help)" presentation="$(presentation.DriveMapper_v2_Map_Q)" key="Software\Policies\DriveMapper\Drives\Q" valueName="Enabled">
+      <parentCategory ref="DriveMapper_v2" />
+      <supportedOn ref="DriveMapperSupported" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <text id="DriveMapper_v2_Map_Q_Path" valueName="Path" required="true" />
+        <text id="DriveMapper_v2_Map_Q_Name" valueName="Name" required="false" />
+        <boolean id="DriveMapper_v2_Map_Q_Reconnect" valueName="Reconnect">
+          <trueValue>
+            <decimal value="1" />
+          </trueValue>
+          <falseValue>
+            <decimal value="0" />
+          </falseValue>
+        </boolean>
+      </elements>
+    </policy>
+    <policy name="DriveMapper_v2_Map_R" class="User" displayName="$(string.DriveMapper_v2_Map_R)" explainText="$(string.DriveMapper_v2_Map_R_Help)" presentation="$(presentation.DriveMapper_v2_Map_R)" key="Software\Policies\DriveMapper\Drives\R" valueName="Enabled">
+      <parentCategory ref="DriveMapper_v2" />
+      <supportedOn ref="DriveMapperSupported" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <text id="DriveMapper_v2_Map_R_Path" valueName="Path" required="true" />
+        <text id="DriveMapper_v2_Map_R_Name" valueName="Name" required="false" />
+        <boolean id="DriveMapper_v2_Map_R_Reconnect" valueName="Reconnect">
+          <trueValue>
+            <decimal value="1" />
+          </trueValue>
+          <falseValue>
+            <decimal value="0" />
+          </falseValue>
+        </boolean>
+      </elements>
+    </policy>
+    <policy name="DriveMapper_v2_Map_S" class="User" displayName="$(string.DriveMapper_v2_Map_S)" explainText="$(string.DriveMapper_v2_Map_S_Help)" presentation="$(presentation.DriveMapper_v2_Map_S)" key="Software\Policies\DriveMapper\Drives\S" valueName="Enabled">
+      <parentCategory ref="DriveMapper_v2" />
+      <supportedOn ref="DriveMapperSupported" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <text id="DriveMapper_v2_Map_S_Path" valueName="Path" required="true" />
+        <text id="DriveMapper_v2_Map_S_Name" valueName="Name" required="false" />
+        <boolean id="DriveMapper_v2_Map_S_Reconnect" valueName="Reconnect">
+          <trueValue>
+            <decimal value="1" />
+          </trueValue>
+          <falseValue>
+            <decimal value="0" />
+          </falseValue>
+        </boolean>
+      </elements>
+    </policy>
+    <policy name="DriveMapper_v2_Map_T" class="User" displayName="$(string.DriveMapper_v2_Map_T)" explainText="$(string.DriveMapper_v2_Map_T_Help)" presentation="$(presentation.DriveMapper_v2_Map_T)" key="Software\Policies\DriveMapper\Drives\T" valueName="Enabled">
+      <parentCategory ref="DriveMapper_v2" />
+      <supportedOn ref="DriveMapperSupported" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <text id="DriveMapper_v2_Map_T_Path" valueName="Path" required="true" />
+        <text id="DriveMapper_v2_Map_T_Name" valueName="Name" required="false" />
+        <boolean id="DriveMapper_v2_Map_T_Reconnect" valueName="Reconnect">
+          <trueValue>
+            <decimal value="1" />
+          </trueValue>
+          <falseValue>
+            <decimal value="0" />
+          </falseValue>
+        </boolean>
+      </elements>
+    </policy>
+    <policy name="DriveMapper_v2_Map_U" class="User" displayName="$(string.DriveMapper_v2_Map_U)" explainText="$(string.DriveMapper_v2_Map_U_Help)" presentation="$(presentation.DriveMapper_v2_Map_U)" key="Software\Policies\DriveMapper\Drives\U" valueName="Enabled">
+      <parentCategory ref="DriveMapper_v2" />
+      <supportedOn ref="DriveMapperSupported" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <text id="DriveMapper_v2_Map_U_Path" valueName="Path" required="true" />
+        <text id="DriveMapper_v2_Map_U_Name" valueName="Name" required="false" />
+        <boolean id="DriveMapper_v2_Map_U_Reconnect" valueName="Reconnect">
+          <trueValue>
+            <decimal value="1" />
+          </trueValue>
+          <falseValue>
+            <decimal value="0" />
+          </falseValue>
+        </boolean>
+      </elements>
+    </policy>
+    <policy name="DriveMapper_v2_Map_V" class="User" displayName="$(string.DriveMapper_v2_Map_V)" explainText="$(string.DriveMapper_v2_Map_V_Help)" presentation="$(presentation.DriveMapper_v2_Map_V)" key="Software\Policies\DriveMapper\Drives\V" valueName="Enabled">
+      <parentCategory ref="DriveMapper_v2" />
+      <supportedOn ref="DriveMapperSupported" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <text id="DriveMapper_v2_Map_V_Path" valueName="Path" required="true" />
+        <text id="DriveMapper_v2_Map_V_Name" valueName="Name" required="false" />
+        <boolean id="DriveMapper_v2_Map_V_Reconnect" valueName="Reconnect">
+          <trueValue>
+            <decimal value="1" />
+          </trueValue>
+          <falseValue>
+            <decimal value="0" />
+          </falseValue>
+        </boolean>
+      </elements>
+    </policy>
+    <policy name="DriveMapper_v2_Map_W" class="User" displayName="$(string.DriveMapper_v2_Map_W)" explainText="$(string.DriveMapper_v2_Map_W_Help)" presentation="$(presentation.DriveMapper_v2_Map_W)" key="Software\Policies\DriveMapper\Drives\W" valueName="Enabled">
+      <parentCategory ref="DriveMapper_v2" />
+      <supportedOn ref="DriveMapperSupported" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <text id="DriveMapper_v2_Map_W_Path" valueName="Path" required="true" />
+        <text id="DriveMapper_v2_Map_W_Name" valueName="Name" required="false" />
+        <boolean id="DriveMapper_v2_Map_W_Reconnect" valueName="Reconnect">
+          <trueValue>
+            <decimal value="1" />
+          </trueValue>
+          <falseValue>
+            <decimal value="0" />
+          </falseValue>
+        </boolean>
+      </elements>
+    </policy>
+    <policy name="DriveMapper_v2_Map_X" class="User" displayName="$(string.DriveMapper_v2_Map_X)" explainText="$(string.DriveMapper_v2_Map_X_Help)" presentation="$(presentation.DriveMapper_v2_Map_X)" key="Software\Policies\DriveMapper\Drives\X" valueName="Enabled">
+      <parentCategory ref="DriveMapper_v2" />
+      <supportedOn ref="DriveMapperSupported" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <text id="DriveMapper_v2_Map_X_Path" valueName="Path" required="true" />
+        <text id="DriveMapper_v2_Map_X_Name" valueName="Name" required="false" />
+        <boolean id="DriveMapper_v2_Map_X_Reconnect" valueName="Reconnect">
+          <trueValue>
+            <decimal value="1" />
+          </trueValue>
+          <falseValue>
+            <decimal value="0" />
+          </falseValue>
+        </boolean>
+      </elements>
+    </policy>
+    <policy name="DriveMapper_v2_Map_Y" class="User" displayName="$(string.DriveMapper_v2_Map_Y)" explainText="$(string.DriveMapper_v2_Map_Y_Help)" presentation="$(presentation.DriveMapper_v2_Map_Y)" key="Software\Policies\DriveMapper\Drives\Y" valueName="Enabled">
+      <parentCategory ref="DriveMapper_v2" />
+      <supportedOn ref="DriveMapperSupported" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <text id="DriveMapper_v2_Map_Y_Path" valueName="Path" required="true" />
+        <text id="DriveMapper_v2_Map_Y_Name" valueName="Name" required="false" />
+        <boolean id="DriveMapper_v2_Map_Y_Reconnect" valueName="Reconnect">
+          <trueValue>
+            <decimal value="1" />
+          </trueValue>
+          <falseValue>
+            <decimal value="0" />
+          </falseValue>
+        </boolean>
+      </elements>
+    </policy>
+    <policy name="DriveMapper_v2_Map_Z" class="User" displayName="$(string.DriveMapper_v2_Map_Z)" explainText="$(string.DriveMapper_v2_Map_Z_Help)" presentation="$(presentation.DriveMapper_v2_Map_Z)" key="Software\Policies\DriveMapper\Drives\Z" valueName="Enabled">
+      <parentCategory ref="DriveMapper_v2" />
+      <supportedOn ref="DriveMapperSupported" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <text id="DriveMapper_v2_Map_Z_Path" valueName="Path" required="true" />
+        <text id="DriveMapper_v2_Map_Z_Name" valueName="Name" required="false" />
+        <boolean id="DriveMapper_v2_Map_Z_Reconnect" valueName="Reconnect">
+          <trueValue>
+            <decimal value="1" />
+          </trueValue>
+          <falseValue>
+            <decimal value="0" />
+          </falseValue>
+        </boolean>
+      </elements>
+    </policy>
+  </policies>
+</policyDefinitions>

@@ -1,0 +1,559 @@
+<?xml version='1.0' encoding='utf-8'?>
+<policyDefinitionResources revision="1.0" schemaVersion="1.0">
+  <displayName>DriveMapper_v2</displayName>
+  <description>User network-drive configuration for DriveMapper-Service and DriveMapper-Agent.</description>
+  <resources>
+    <stringTable>
+      <string id="Category">DriveMapper v2 - Drive mappings</string>
+      <string id="Supported">Windows 10 version 1709 or later, or Windows 11; DriveMapper-Service and DriveMapper-Agent required</string>
+      <string id="DriveMapper_v2_Map_A">Configure drive A:</string>
+      <string id="DriveMapper_v2_Map_A_Help">Configure network drive A: in the signed-in user's session.
+
+Enabled: maintain the specified network path. Enter a UNC path such as \\server\share or \\server\share\folder. The display name is optional; leave it blank to use Windows' default label. Reconnect at sign-in makes Windows remember the connection between sign-ins. DriveMapper recovery operates whether this option is on or off.
+
+Disabled: remove the mapping previously managed by DriveMapper. Not Configured withdraws this configuration; after Windows removes the local policy values, DriveMapper cleans up its owned mapping. Deleting an Intune profile requires policy withdrawal to reach the client; it is not an immediate local action.
+
+DriveMapper-Service combines changes and requests an Agent run after 60 seconds of settling. Network access and permissions are those of the signed-in user. No credentials are configured here.
+
+Changing a valid destination retires the previous connection and its remembered reconnect entry before attempting the replacement. A failed replacement never restores the old destination. Removal and replacement force disconnection, which can interrupt open files and unsaved writes.
+
+Local devices are preserved. Enabled policy controls the letter's network mapping; cleanup after disablement or withdrawal only removes a mapping matching DriveMapper's ownership record. Invalid or incomplete enabled configuration preserves existing mappings and reports an error. Configure each drive letter in only one assigned profile. Machine drive policies are not supported.</string>
+      <string id="DriveMapper_v2_Map_B">Configure drive B:</string>
+      <string id="DriveMapper_v2_Map_B_Help">Configure network drive B: in the signed-in user's session.
+
+Enabled: maintain the specified network path. Enter a UNC path such as \\server\share or \\server\share\folder. The display name is optional; leave it blank to use Windows' default label. Reconnect at sign-in makes Windows remember the connection between sign-ins. DriveMapper recovery operates whether this option is on or off.
+
+Disabled: remove the mapping previously managed by DriveMapper. Not Configured withdraws this configuration; after Windows removes the local policy values, DriveMapper cleans up its owned mapping. Deleting an Intune profile requires policy withdrawal to reach the client; it is not an immediate local action.
+
+DriveMapper-Service combines changes and requests an Agent run after 60 seconds of settling. Network access and permissions are those of the signed-in user. No credentials are configured here.
+
+Changing a valid destination retires the previous connection and its remembered reconnect entry before attempting the replacement. A failed replacement never restores the old destination. Removal and replacement force disconnection, which can interrupt open files and unsaved writes.
+
+Local devices are preserved. Enabled policy controls the letter's network mapping; cleanup after disablement or withdrawal only removes a mapping matching DriveMapper's ownership record. Invalid or incomplete enabled configuration preserves existing mappings and reports an error. Configure each drive letter in only one assigned profile. Machine drive policies are not supported.</string>
+      <string id="DriveMapper_v2_Map_C">Configure drive C:</string>
+      <string id="DriveMapper_v2_Map_C_Help">Configure network drive C: in the signed-in user's session.
+
+Enabled: maintain the specified network path. Enter a UNC path such as \\server\share or \\server\share\folder. The display name is optional; leave it blank to use Windows' default label. Reconnect at sign-in makes Windows remember the connection between sign-ins. DriveMapper recovery operates whether this option is on or off.
+
+Disabled: remove the mapping previously managed by DriveMapper. Not Configured withdraws this configuration; after Windows removes the local policy values, DriveMapper cleans up its owned mapping. Deleting an Intune profile requires policy withdrawal to reach the client; it is not an immediate local action.
+
+DriveMapper-Service combines changes and requests an Agent run after 60 seconds of settling. Network access and permissions are those of the signed-in user. No credentials are configured here.
+
+Changing a valid destination retires the previous connection and its remembered reconnect entry before attempting the replacement. A failed replacement never restores the old destination. Removal and replacement force disconnection, which can interrupt open files and unsaved writes.
+
+Local devices are preserved. Enabled policy controls the letter's network mapping; cleanup after disablement or withdrawal only removes a mapping matching DriveMapper's ownership record. Invalid or incomplete enabled configuration preserves existing mappings and reports an error. Configure each drive letter in only one assigned profile. Machine drive policies are not supported.</string>
+      <string id="DriveMapper_v2_Map_D">Configure drive D:</string>
+      <string id="DriveMapper_v2_Map_D_Help">Configure network drive D: in the signed-in user's session.
+
+Enabled: maintain the specified network path. Enter a UNC path such as \\server\share or \\server\share\folder. The display name is optional; leave it blank to use Windows' default label. Reconnect at sign-in makes Windows remember the connection between sign-ins. DriveMapper recovery operates whether this option is on or off.
+
+Disabled: remove the mapping previously managed by DriveMapper. Not Configured withdraws this configuration; after Windows removes the local policy values, DriveMapper cleans up its owned mapping. Deleting an Intune profile requires policy withdrawal to reach the client; it is not an immediate local action.
+
+DriveMapper-Service combines changes and requests an Agent run after 60 seconds of settling. Network access and permissions are those of the signed-in user. No credentials are configured here.
+
+Changing a valid destination retires the previous connection and its remembered reconnect entry before attempting the replacement. A failed replacement never restores the old destination. Removal and replacement force disconnection, which can interrupt open files and unsaved writes.
+
+Local devices are preserved. Enabled policy controls the letter's network mapping; cleanup after disablement or withdrawal only removes a mapping matching DriveMapper's ownership record. Invalid or incomplete enabled configuration preserves existing mappings and reports an error. Configure each drive letter in only one assigned profile. Machine drive policies are not supported.</string>
+      <string id="DriveMapper_v2_Map_E">Configure drive E:</string>
+      <string id="DriveMapper_v2_Map_E_Help">Configure network drive E: in the signed-in user's session.
+
+Enabled: maintain the specified network path. Enter a UNC path such as \\server\share or \\server\share\folder. The display name is optional; leave it blank to use Windows' default label. Reconnect at sign-in makes Windows remember the connection between sign-ins. DriveMapper recovery operates whether this option is on or off.
+
+Disabled: remove the mapping previously managed by DriveMapper. Not Configured withdraws this configuration; after Windows removes the local policy values, DriveMapper cleans up its owned mapping. Deleting an Intune profile requires policy withdrawal to reach the client; it is not an immediate local action.
+
+DriveMapper-Service combines changes and requests an Agent run after 60 seconds of settling. Network access and permissions are those of the signed-in user. No credentials are configured here.
+
+Changing a valid destination retires the previous connection and its remembered reconnect entry before attempting the replacement. A failed replacement never restores the old destination. Removal and replacement force disconnection, which can interrupt open files and unsaved writes.
+
+Local devices are preserved. Enabled policy controls the letter's network mapping; cleanup after disablement or withdrawal only removes a mapping matching DriveMapper's ownership record. Invalid or incomplete enabled configuration preserves existing mappings and reports an error. Configure each drive letter in only one assigned profile. Machine drive policies are not supported.</string>
+      <string id="DriveMapper_v2_Map_F">Configure drive F:</string>
+      <string id="DriveMapper_v2_Map_F_Help">Configure network drive F: in the signed-in user's session.
+
+Enabled: maintain the specified network path. Enter a UNC path such as \\server\share or \\server\share\folder. The display name is optional; leave it blank to use Windows' default label. Reconnect at sign-in makes Windows remember the connection between sign-ins. DriveMapper recovery operates whether this option is on or off.
+
+Disabled: remove the mapping previously managed by DriveMapper. Not Configured withdraws this configuration; after Windows removes the local policy values, DriveMapper cleans up its owned mapping. Deleting an Intune profile requires policy withdrawal to reach the client; it is not an immediate local action.
+
+DriveMapper-Service combines changes and requests an Agent run after 60 seconds of settling. Network access and permissions are those of the signed-in user. No credentials are configured here.
+
+Changing a valid destination retires the previous connection and its remembered reconnect entry before attempting the replacement. A failed replacement never restores the old destination. Removal and replacement force disconnection, which can interrupt open files and unsaved writes.
+
+Local devices are preserved. Enabled policy controls the letter's network mapping; cleanup after disablement or withdrawal only removes a mapping matching DriveMapper's ownership record. Invalid or incomplete enabled configuration preserves existing mappings and reports an error. Configure each drive letter in only one assigned profile. Machine drive policies are not supported.</string>
+      <string id="DriveMapper_v2_Map_G">Configure drive G:</string>
+      <string id="DriveMapper_v2_Map_G_Help">Configure network drive G: in the signed-in user's session.
+
+Enabled: maintain the specified network path. Enter a UNC path such as \\server\share or \\server\share\folder. The display name is optional; leave it blank to use Windows' default label. Reconnect at sign-in makes Windows remember the connection between sign-ins. DriveMapper recovery operates whether this option is on or off.
+
+Disabled: remove the mapping previously managed by DriveMapper. Not Configured withdraws this configuration; after Windows removes the local policy values, DriveMapper cleans up its owned mapping. Deleting an Intune profile requires policy withdrawal to reach the client; it is not an immediate local action.
+
+DriveMapper-Service combines changes and requests an Agent run after 60 seconds of settling. Network access and permissions are those of the signed-in user. No credentials are configured here.
+
+Changing a valid destination retires the previous connection and its remembered reconnect entry before attempting the replacement. A failed replacement never restores the old destination. Removal and replacement force disconnection, which can interrupt open files and unsaved writes.
+
+Local devices are preserved. Enabled policy controls the letter's network mapping; cleanup after disablement or withdrawal only removes a mapping matching DriveMapper's ownership record. Invalid or incomplete enabled configuration preserves existing mappings and reports an error. Configure each drive letter in only one assigned profile. Machine drive policies are not supported.</string>
+      <string id="DriveMapper_v2_Map_H">Configure drive H:</string>
+      <string id="DriveMapper_v2_Map_H_Help">Configure network drive H: in the signed-in user's session.
+
+Enabled: maintain the specified network path. Enter a UNC path such as \\server\share or \\server\share\folder. The display name is optional; leave it blank to use Windows' default label. Reconnect at sign-in makes Windows remember the connection between sign-ins. DriveMapper recovery operates whether this option is on or off.
+
+Disabled: remove the mapping previously managed by DriveMapper. Not Configured withdraws this configuration; after Windows removes the local policy values, DriveMapper cleans up its owned mapping. Deleting an Intune profile requires policy withdrawal to reach the client; it is not an immediate local action.
+
+DriveMapper-Service combines changes and requests an Agent run after 60 seconds of settling. Network access and permissions are those of the signed-in user. No credentials are configured here.
+
+Changing a valid destination retires the previous connection and its remembered reconnect entry before attempting the replacement. A failed replacement never restores the old destination. Removal and replacement force disconnection, which can interrupt open files and unsaved writes.
+
+Local devices are preserved. Enabled policy controls the letter's network mapping; cleanup after disablement or withdrawal only removes a mapping matching DriveMapper's ownership record. Invalid or incomplete enabled configuration preserves existing mappings and reports an error. Configure each drive letter in only one assigned profile. Machine drive policies are not supported.</string>
+      <string id="DriveMapper_v2_Map_I">Configure drive I:</string>
+      <string id="DriveMapper_v2_Map_I_Help">Configure network drive I: in the signed-in user's session.
+
+Enabled: maintain the specified network path. Enter a UNC path such as \\server\share or \\server\share\folder. The display name is optional; leave it blank to use Windows' default label. Reconnect at sign-in makes Windows remember the connection between sign-ins. DriveMapper recovery operates whether this option is on or off.
+
+Disabled: remove the mapping previously managed by DriveMapper. Not Configured withdraws this configuration; after Windows removes the local policy values, DriveMapper cleans up its owned mapping. Deleting an Intune profile requires policy withdrawal to reach the client; it is not an immediate local action.
+
+DriveMapper-Service combines changes and requests an Agent run after 60 seconds of settling. Network access and permissions are those of the signed-in user. No credentials are configured here.
+
+Changing a valid destination retires the previous connection and its remembered reconnect entry before attempting the replacement. A failed replacement never restores the old destination. Removal and replacement force disconnection, which can interrupt open files and unsaved writes.
+
+Local devices are preserved. Enabled policy controls the letter's network mapping; cleanup after disablement or withdrawal only removes a mapping matching DriveMapper's ownership record. Invalid or incomplete enabled configuration preserves existing mappings and reports an error. Configure each drive letter in only one assigned profile. Machine drive policies are not supported.</string>
+      <string id="DriveMapper_v2_Map_J">Configure drive J:</string>
+      <string id="DriveMapper_v2_Map_J_Help">Configure network drive J: in the signed-in user's session.
+
+Enabled: maintain the specified network path. Enter a UNC path such as \\server\share or \\server\share\folder. The display name is optional; leave it blank to use Windows' default label. Reconnect at sign-in makes Windows remember the connection between sign-ins. DriveMapper recovery operates whether this option is on or off.
+
+Disabled: remove the mapping previously managed by DriveMapper. Not Configured withdraws this configuration; after Windows removes the local policy values, DriveMapper cleans up its owned mapping. Deleting an Intune profile requires policy withdrawal to reach the client; it is not an immediate local action.
+
+DriveMapper-Service combines changes and requests an Agent run after 60 seconds of settling. Network access and permissions are those of the signed-in user. No credentials are configured here.
+
+Changing a valid destination retires the previous connection and its remembered reconnect entry before attempting the replacement. A failed replacement never restores the old destination. Removal and replacement force disconnection, which can interrupt open files and unsaved writes.
+
+Local devices are preserved. Enabled policy controls the letter's network mapping; cleanup after disablement or withdrawal only removes a mapping matching DriveMapper's ownership record. Invalid or incomplete enabled configuration preserves existing mappings and reports an error. Configure each drive letter in only one assigned profile. Machine drive policies are not supported.</string>
+      <string id="DriveMapper_v2_Map_K">Configure drive K:</string>
+      <string id="DriveMapper_v2_Map_K_Help">Configure network drive K: in the signed-in user's session.
+
+Enabled: maintain the specified network path. Enter a UNC path such as \\server\share or \\server\share\folder. The display name is optional; leave it blank to use Windows' default label. Reconnect at sign-in makes Windows remember the connection between sign-ins. DriveMapper recovery operates whether this option is on or off.
+
+Disabled: remove the mapping previously managed by DriveMapper. Not Configured withdraws this configuration; after Windows removes the local policy values, DriveMapper cleans up its owned mapping. Deleting an Intune profile requires policy withdrawal to reach the client; it is not an immediate local action.
+
+DriveMapper-Service combines changes and requests an Agent run after 60 seconds of settling. Network access and permissions are those of the signed-in user. No credentials are configured here.
+
+Changing a valid destination retires the previous connection and its remembered reconnect entry before attempting the replacement. A failed replacement never restores the old destination. Removal and replacement force disconnection, which can interrupt open files and unsaved writes.
+
+Local devices are preserved. Enabled policy controls the letter's network mapping; cleanup after disablement or withdrawal only removes a mapping matching DriveMapper's ownership record. Invalid or incomplete enabled configuration preserves existing mappings and reports an error. Configure each drive letter in only one assigned profile. Machine drive policies are not supported.</string>
+      <string id="DriveMapper_v2_Map_L">Configure drive L:</string>
+      <string id="DriveMapper_v2_Map_L_Help">Configure network drive L: in the signed-in user's session.
+
+Enabled: maintain the specified network path. Enter a UNC path such as \\server\share or \\server\share\folder. The display name is optional; leave it blank to use Windows' default label. Reconnect at sign-in makes Windows remember the connection between sign-ins. DriveMapper recovery operates whether this option is on or off.
+
+Disabled: remove the mapping previously managed by DriveMapper. Not Configured withdraws this configuration; after Windows removes the local policy values, DriveMapper cleans up its owned mapping. Deleting an Intune profile requires policy withdrawal to reach the client; it is not an immediate local action.
+
+DriveMapper-Service combines changes and requests an Agent run after 60 seconds of settling. Network access and permissions are those of the signed-in user. No credentials are configured here.
+
+Changing a valid destination retires the previous connection and its remembered reconnect entry before attempting the replacement. A failed replacement never restores the old destination. Removal and replacement force disconnection, which can interrupt open files and unsaved writes.
+
+Local devices are preserved. Enabled policy controls the letter's network mapping; cleanup after disablement or withdrawal only removes a mapping matching DriveMapper's ownership record. Invalid or incomplete enabled configuration preserves existing mappings and reports an error. Configure each drive letter in only one assigned profile. Machine drive policies are not supported.</string>
+      <string id="DriveMapper_v2_Map_M">Configure drive M:</string>
+      <string id="DriveMapper_v2_Map_M_Help">Configure network drive M: in the signed-in user's session.
+
+Enabled: maintain the specified network path. Enter a UNC path such as \\server\share or \\server\share\folder. The display name is optional; leave it blank to use Windows' default label. Reconnect at sign-in makes Windows remember the connection between sign-ins. DriveMapper recovery operates whether this option is on or off.
+
+Disabled: remove the mapping previously managed by DriveMapper. Not Configured withdraws this configuration; after Windows removes the local policy values, DriveMapper cleans up its owned mapping. Deleting an Intune profile requires policy withdrawal to reach the client; it is not an immediate local action.
+
+DriveMapper-Service combines changes and requests an Agent run after 60 seconds of settling. Network access and permissions are those of the signed-in user. No credentials are configured here.
+
+Changing a valid destination retires the previous connection and its remembered reconnect entry before attempting the replacement. A failed replacement never restores the old destination. Removal and replacement force disconnection, which can interrupt open files and unsaved writes.
+
+Local devices are preserved. Enabled policy controls the letter's network mapping; cleanup after disablement or withdrawal only removes a mapping matching DriveMapper's ownership record. Invalid or incomplete enabled configuration preserves existing mappings and reports an error. Configure each drive letter in only one assigned profile. Machine drive policies are not supported.</string>
+      <string id="DriveMapper_v2_Map_N">Configure drive N:</string>
+      <string id="DriveMapper_v2_Map_N_Help">Configure network drive N: in the signed-in user's session.
+
+Enabled: maintain the specified network path. Enter a UNC path such as \\server\share or \\server\share\folder. The display name is optional; leave it blank to use Windows' default label. Reconnect at sign-in makes Windows remember the connection between sign-ins. DriveMapper recovery operates whether this option is on or off.
+
+Disabled: remove the mapping previously managed by DriveMapper. Not Configured withdraws this configuration; after Windows removes the local policy values, DriveMapper cleans up its owned mapping. Deleting an Intune profile requires policy withdrawal to reach the client; it is not an immediate local action.
+
+DriveMapper-Service combines changes and requests an Agent run after 60 seconds of settling. Network access and permissions are those of the signed-in user. No credentials are configured here.
+
+Changing a valid destination retires the previous connection and its remembered reconnect entry before attempting the replacement. A failed replacement never restores the old destination. Removal and replacement force disconnection, which can interrupt open files and unsaved writes.
+
+Local devices are preserved. Enabled policy controls the letter's network mapping; cleanup after disablement or withdrawal only removes a mapping matching DriveMapper's ownership record. Invalid or incomplete enabled configuration preserves existing mappings and reports an error. Configure each drive letter in only one assigned profile. Machine drive policies are not supported.</string>
+      <string id="DriveMapper_v2_Map_O">Configure drive O:</string>
+      <string id="DriveMapper_v2_Map_O_Help">Configure network drive O: in the signed-in user's session.
+
+Enabled: maintain the specified network path. Enter a UNC path such as \\server\share or \\server\share\folder. The display name is optional; leave it blank to use Windows' default label. Reconnect at sign-in makes Windows remember the connection between sign-ins. DriveMapper recovery operates whether this option is on or off.
+
+Disabled: remove the mapping previously managed by DriveMapper. Not Configured withdraws this configuration; after Windows removes the local policy values, DriveMapper cleans up its owned mapping. Deleting an Intune profile requires policy withdrawal to reach the client; it is not an immediate local action.
+
+DriveMapper-Service combines changes and requests an Agent run after 60 seconds of settling. Network access and permissions are those of the signed-in user. No credentials are configured here.
+
+Changing a valid destination retires the previous connection and its remembered reconnect entry before attempting the replacement. A failed replacement never restores the old destination. Removal and replacement force disconnection, which can interrupt open files and unsaved writes.
+
+Local devices are preserved. Enabled policy controls the letter's network mapping; cleanup after disablement or withdrawal only removes a mapping matching DriveMapper's ownership record. Invalid or incomplete enabled configuration preserves existing mappings and reports an error. Configure each drive letter in only one assigned profile. Machine drive policies are not supported.</string>
+      <string id="DriveMapper_v2_Map_P">Configure drive P:</string>
+      <string id="DriveMapper_v2_Map_P_Help">Configure network drive P: in the signed-in user's session.
+
+Enabled: maintain the specified network path. Enter a UNC path such as \\server\share or \\server\share\folder. The display name is optional; leave it blank to use Windows' default label. Reconnect at sign-in makes Windows remember the connection between sign-ins. DriveMapper recovery operates whether this option is on or off.
+
+Disabled: remove the mapping previously managed by DriveMapper. Not Configured withdraws this configuration; after Windows removes the local policy values, DriveMapper cleans up its owned mapping. Deleting an Intune profile requires policy withdrawal to reach the client; it is not an immediate local action.
+
+DriveMapper-Service combines changes and requests an Agent run after 60 seconds of settling. Network access and permissions are those of the signed-in user. No credentials are configured here.
+
+Changing a valid destination retires the previous connection and its remembered reconnect entry before attempting the replacement. A failed replacement never restores the old destination. Removal and replacement force disconnection, which can interrupt open files and unsaved writes.
+
+Local devices are preserved. Enabled policy controls the letter's network mapping; cleanup after disablement or withdrawal only removes a mapping matching DriveMapper's ownership record. Invalid or incomplete enabled configuration preserves existing mappings and reports an error. Configure each drive letter in only one assigned profile. Machine drive policies are not supported.</string>
+      <string id="DriveMapper_v2_Map_Q">Configure drive Q:</string>
+      <string id="DriveMapper_v2_Map_Q_Help">Configure network drive Q: in the signed-in user's session.
+
+Enabled: maintain the specified network path. Enter a UNC path such as \\server\share or \\server\share\folder. The display name is optional; leave it blank to use Windows' default label. Reconnect at sign-in makes Windows remember the connection between sign-ins. DriveMapper recovery operates whether this option is on or off.
+
+Disabled: remove the mapping previously managed by DriveMapper. Not Configured withdraws this configuration; after Windows removes the local policy values, DriveMapper cleans up its owned mapping. Deleting an Intune profile requires policy withdrawal to reach the client; it is not an immediate local action.
+
+DriveMapper-Service combines changes and requests an Agent run after 60 seconds of settling. Network access and permissions are those of the signed-in user. No credentials are configured here.
+
+Changing a valid destination retires the previous connection and its remembered reconnect entry before attempting the replacement. A failed replacement never restores the old destination. Removal and replacement force disconnection, which can interrupt open files and unsaved writes.
+
+Local devices are preserved. Enabled policy controls the letter's network mapping; cleanup after disablement or withdrawal only removes a mapping matching DriveMapper's ownership record. Invalid or incomplete enabled configuration preserves existing mappings and reports an error. Configure each drive letter in only one assigned profile. Machine drive policies are not supported.</string>
+      <string id="DriveMapper_v2_Map_R">Configure drive R:</string>
+      <string id="DriveMapper_v2_Map_R_Help">Configure network drive R: in the signed-in user's session.
+
+Enabled: maintain the specified network path. Enter a UNC path such as \\server\share or \\server\share\folder. The display name is optional; leave it blank to use Windows' default label. Reconnect at sign-in makes Windows remember the connection between sign-ins. DriveMapper recovery operates whether this option is on or off.
+
+Disabled: remove the mapping previously managed by DriveMapper. Not Configured withdraws this configuration; after Windows removes the local policy values, DriveMapper cleans up its owned mapping. Deleting an Intune profile requires policy withdrawal to reach the client; it is not an immediate local action.
+
+DriveMapper-Service combines changes and requests an Agent run after 60 seconds of settling. Network access and permissions are those of the signed-in user. No credentials are configured here.
+
+Changing a valid destination retires the previous connection and its remembered reconnect entry before attempting the replacement. A failed replacement never restores the old destination. Removal and replacement force disconnection, which can interrupt open files and unsaved writes.
+
+Local devices are preserved. Enabled policy controls the letter's network mapping; cleanup after disablement or withdrawal only removes a mapping matching DriveMapper's ownership record. Invalid or incomplete enabled configuration preserves existing mappings and reports an error. Configure each drive letter in only one assigned profile. Machine drive policies are not supported.</string>
+      <string id="DriveMapper_v2_Map_S">Configure drive S:</string>
+      <string id="DriveMapper_v2_Map_S_Help">Configure network drive S: in the signed-in user's session.
+
+Enabled: maintain the specified network path. Enter a UNC path such as \\server\share or \\server\share\folder. The display name is optional; leave it blank to use Windows' default label. Reconnect at sign-in makes Windows remember the connection between sign-ins. DriveMapper recovery operates whether this option is on or off.
+
+Disabled: remove the mapping previously managed by DriveMapper. Not Configured withdraws this configuration; after Windows removes the local policy values, DriveMapper cleans up its owned mapping. Deleting an Intune profile requires policy withdrawal to reach the client; it is not an immediate local action.
+
+DriveMapper-Service combines changes and requests an Agent run after 60 seconds of settling. Network access and permissions are those of the signed-in user. No credentials are configured here.
+
+Changing a valid destination retires the previous connection and its remembered reconnect entry before attempting the replacement. A failed replacement never restores the old destination. Removal and replacement force disconnection, which can interrupt open files and unsaved writes.
+
+Local devices are preserved. Enabled policy controls the letter's network mapping; cleanup after disablement or withdrawal only removes a mapping matching DriveMapper's ownership record. Invalid or incomplete enabled configuration preserves existing mappings and reports an error. Configure each drive letter in only one assigned profile. Machine drive policies are not supported.</string>
+      <string id="DriveMapper_v2_Map_T">Configure drive T:</string>
+      <string id="DriveMapper_v2_Map_T_Help">Configure network drive T: in the signed-in user's session.
+
+Enabled: maintain the specified network path. Enter a UNC path such as \\server\share or \\server\share\folder. The display name is optional; leave it blank to use Windows' default label. Reconnect at sign-in makes Windows remember the connection between sign-ins. DriveMapper recovery operates whether this option is on or off.
+
+Disabled: remove the mapping previously managed by DriveMapper. Not Configured withdraws this configuration; after Windows removes the local policy values, DriveMapper cleans up its owned mapping. Deleting an Intune profile requires policy withdrawal to reach the client; it is not an immediate local action.
+
+DriveMapper-Service combines changes and requests an Agent run after 60 seconds of settling. Network access and permissions are those of the signed-in user. No credentials are configured here.
+
+Changing a valid destination retires the previous connection and its remembered reconnect entry before attempting the replacement. A failed replacement never restores the old destination. Removal and replacement force disconnection, which can interrupt open files and unsaved writes.
+
+Local devices are preserved. Enabled policy controls the letter's network mapping; cleanup after disablement or withdrawal only removes a mapping matching DriveMapper's ownership record. Invalid or incomplete enabled configuration preserves existing mappings and reports an error. Configure each drive letter in only one assigned profile. Machine drive policies are not supported.</string>
+      <string id="DriveMapper_v2_Map_U">Configure drive U:</string>
+      <string id="DriveMapper_v2_Map_U_Help">Configure network drive U: in the signed-in user's session.
+
+Enabled: maintain the specified network path. Enter a UNC path such as \\server\share or \\server\share\folder. The display name is optional; leave it blank to use Windows' default label. Reconnect at sign-in makes Windows remember the connection between sign-ins. DriveMapper recovery operates whether this option is on or off.
+
+Disabled: remove the mapping previously managed by DriveMapper. Not Configured withdraws this configuration; after Windows removes the local policy values, DriveMapper cleans up its owned mapping. Deleting an Intune profile requires policy withdrawal to reach the client; it is not an immediate local action.
+
+DriveMapper-Service combines changes and requests an Agent run after 60 seconds of settling. Network access and permissions are those of the signed-in user. No credentials are configured here.
+
+Changing a valid destination retires the previous connection and its remembered reconnect entry before attempting the replacement. A failed replacement never restores the old destination. Removal and replacement force disconnection, which can interrupt open files and unsaved writes.
+
+Local devices are preserved. Enabled policy controls the letter's network mapping; cleanup after disablement or withdrawal only removes a mapping matching DriveMapper's ownership record. Invalid or incomplete enabled configuration preserves existing mappings and reports an error. Configure each drive letter in only one assigned profile. Machine drive policies are not supported.</string>
+      <string id="DriveMapper_v2_Map_V">Configure drive V:</string>
+      <string id="DriveMapper_v2_Map_V_Help">Configure network drive V: in the signed-in user's session.
+
+Enabled: maintain the specified network path. Enter a UNC path such as \\server\share or \\server\share\folder. The display name is optional; leave it blank to use Windows' default label. Reconnect at sign-in makes Windows remember the connection between sign-ins. DriveMapper recovery operates whether this option is on or off.
+
+Disabled: remove the mapping previously managed by DriveMapper. Not Configured withdraws this configuration; after Windows removes the local policy values, DriveMapper cleans up its owned mapping. Deleting an Intune profile requires policy withdrawal to reach the client; it is not an immediate local action.
+
+DriveMapper-Service combines changes and requests an Agent run after 60 seconds of settling. Network access and permissions are those of the signed-in user. No credentials are configured here.
+
+Changing a valid destination retires the previous connection and its remembered reconnect entry before attempting the replacement. A failed replacement never restores the old destination. Removal and replacement force disconnection, which can interrupt open files and unsaved writes.
+
+Local devices are preserved. Enabled policy controls the letter's network mapping; cleanup after disablement or withdrawal only removes a mapping matching DriveMapper's ownership record. Invalid or incomplete enabled configuration preserves existing mappings and reports an error. Configure each drive letter in only one assigned profile. Machine drive policies are not supported.</string>
+      <string id="DriveMapper_v2_Map_W">Configure drive W:</string>
+      <string id="DriveMapper_v2_Map_W_Help">Configure network drive W: in the signed-in user's session.
+
+Enabled: maintain the specified network path. Enter a UNC path such as \\server\share or \\server\share\folder. The display name is optional; leave it blank to use Windows' default label. Reconnect at sign-in makes Windows remember the connection between sign-ins. DriveMapper recovery operates whether this option is on or off.
+
+Disabled: remove the mapping previously managed by DriveMapper. Not Configured withdraws this configuration; after Windows removes the local policy values, DriveMapper cleans up its owned mapping. Deleting an Intune profile requires policy withdrawal to reach the client; it is not an immediate local action.
+
+DriveMapper-Service combines changes and requests an Agent run after 60 seconds of settling. Network access and permissions are those of the signed-in user. No credentials are configured here.
+
+Changing a valid destination retires the previous connection and its remembered reconnect entry before attempting the replacement. A failed replacement never restores the old destination. Removal and replacement force disconnection, which can interrupt open files and unsaved writes.
+
+Local devices are preserved. Enabled policy controls the letter's network mapping; cleanup after disablement or withdrawal only removes a mapping matching DriveMapper's ownership record. Invalid or incomplete enabled configuration preserves existing mappings and reports an error. Configure each drive letter in only one assigned profile. Machine drive policies are not supported.</string>
+      <string id="DriveMapper_v2_Map_X">Configure drive X:</string>
+      <string id="DriveMapper_v2_Map_X_Help">Configure network drive X: in the signed-in user's session.
+
+Enabled: maintain the specified network path. Enter a UNC path such as \\server\share or \\server\share\folder. The display name is optional; leave it blank to use Windows' default label. Reconnect at sign-in makes Windows remember the connection between sign-ins. DriveMapper recovery operates whether this option is on or off.
+
+Disabled: remove the mapping previously managed by DriveMapper. Not Configured withdraws this configuration; after Windows removes the local policy values, DriveMapper cleans up its owned mapping. Deleting an Intune profile requires policy withdrawal to reach the client; it is not an immediate local action.
+
+DriveMapper-Service combines changes and requests an Agent run after 60 seconds of settling. Network access and permissions are those of the signed-in user. No credentials are configured here.
+
+Changing a valid destination retires the previous connection and its remembered reconnect entry before attempting the replacement. A failed replacement never restores the old destination. Removal and replacement force disconnection, which can interrupt open files and unsaved writes.
+
+Local devices are preserved. Enabled policy controls the letter's network mapping; cleanup after disablement or withdrawal only removes a mapping matching DriveMapper's ownership record. Invalid or incomplete enabled configuration preserves existing mappings and reports an error. Configure each drive letter in only one assigned profile. Machine drive policies are not supported.</string>
+      <string id="DriveMapper_v2_Map_Y">Configure drive Y:</string>
+      <string id="DriveMapper_v2_Map_Y_Help">Configure network drive Y: in the signed-in user's session.
+
+Enabled: maintain the specified network path. Enter a UNC path such as \\server\share or \\server\share\folder. The display name is optional; leave it blank to use Windows' default label. Reconnect at sign-in makes Windows remember the connection between sign-ins. DriveMapper recovery operates whether this option is on or off.
+
+Disabled: remove the mapping previously managed by DriveMapper. Not Configured withdraws this configuration; after Windows removes the local policy values, DriveMapper cleans up its owned mapping. Deleting an Intune profile requires policy withdrawal to reach the client; it is not an immediate local action.
+
+DriveMapper-Service combines changes and requests an Agent run after 60 seconds of settling. Network access and permissions are those of the signed-in user. No credentials are configured here.
+
+Changing a valid destination retires the previous connection and its remembered reconnect entry before attempting the replacement. A failed replacement never restores the old destination. Removal and replacement force disconnection, which can interrupt open files and unsaved writes.
+
+Local devices are preserved. Enabled policy controls the letter's network mapping; cleanup after disablement or withdrawal only removes a mapping matching DriveMapper's ownership record. Invalid or incomplete enabled configuration preserves existing mappings and reports an error. Configure each drive letter in only one assigned profile. Machine drive policies are not supported.</string>
+      <string id="DriveMapper_v2_Map_Z">Configure drive Z:</string>
+      <string id="DriveMapper_v2_Map_Z_Help">Configure network drive Z: in the signed-in user's session.
+
+Enabled: maintain the specified network path. Enter a UNC path such as \\server\share or \\server\share\folder. The display name is optional; leave it blank to use Windows' default label. Reconnect at sign-in makes Windows remember the connection between sign-ins. DriveMapper recovery operates whether this option is on or off.
+
+Disabled: remove the mapping previously managed by DriveMapper. Not Configured withdraws this configuration; after Windows removes the local policy values, DriveMapper cleans up its owned mapping. Deleting an Intune profile requires policy withdrawal to reach the client; it is not an immediate local action.
+
+DriveMapper-Service combines changes and requests an Agent run after 60 seconds of settling. Network access and permissions are those of the signed-in user. No credentials are configured here.
+
+Changing a valid destination retires the previous connection and its remembered reconnect entry before attempting the replacement. A failed replacement never restores the old destination. Removal and replacement force disconnection, which can interrupt open files and unsaved writes.
+
+Local devices are preserved. Enabled policy controls the letter's network mapping; cleanup after disablement or withdrawal only removes a mapping matching DriveMapper's ownership record. Invalid or incomplete enabled configuration preserves existing mappings and reports an error. Configure each drive letter in only one assigned profile. Machine drive policies are not supported.</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="DriveMapper_v2_Map_A">
+        <textBox refId="DriveMapper_v2_Map_A_Path">
+          <label>Network path (required)</label>
+        </textBox>
+        <textBox refId="DriveMapper_v2_Map_A_Name">
+          <label>Display name (optional)</label>
+        </textBox>
+        <checkBox refId="DriveMapper_v2_Map_A_Reconnect" defaultChecked="false">Reconnect at sign-in (Windows remembers the connection)</checkBox>
+      </presentation>
+      <presentation id="DriveMapper_v2_Map_B">
+        <textBox refId="DriveMapper_v2_Map_B_Path">
+          <label>Network path (required)</label>
+        </textBox>
+        <textBox refId="DriveMapper_v2_Map_B_Name">
+          <label>Display name (optional)</label>
+        </textBox>
+        <checkBox refId="DriveMapper_v2_Map_B_Reconnect" defaultChecked="false">Reconnect at sign-in (Windows remembers the connection)</checkBox>
+      </presentation>
+      <presentation id="DriveMapper_v2_Map_C">
+        <textBox refId="DriveMapper_v2_Map_C_Path">
+          <label>Network path (required)</label>
+        </textBox>
+        <textBox refId="DriveMapper_v2_Map_C_Name">
+          <label>Display name (optional)</label>
+        </textBox>
+        <checkBox refId="DriveMapper_v2_Map_C_Reconnect" defaultChecked="false">Reconnect at sign-in (Windows remembers the connection)</checkBox>
+      </presentation>
+      <presentation id="DriveMapper_v2_Map_D">
+        <textBox refId="DriveMapper_v2_Map_D_Path">
+          <label>Network path (required)</label>
+        </textBox>
+        <textBox refId="DriveMapper_v2_Map_D_Name">
+          <label>Display name (optional)</label>
+        </textBox>
+        <checkBox refId="DriveMapper_v2_Map_D_Reconnect" defaultChecked="false">Reconnect at sign-in (Windows remembers the connection)</checkBox>
+      </presentation>
+      <presentation id="DriveMapper_v2_Map_E">
+        <textBox refId="DriveMapper_v2_Map_E_Path">
+          <label>Network path (required)</label>
+        </textBox>
+        <textBox refId="DriveMapper_v2_Map_E_Name">
+          <label>Display name (optional)</label>
+        </textBox>
+        <checkBox refId="DriveMapper_v2_Map_E_Reconnect" defaultChecked="false">Reconnect at sign-in (Windows remembers the connection)</checkBox>
+      </presentation>
+      <presentation id="DriveMapper_v2_Map_F">
+        <textBox refId="DriveMapper_v2_Map_F_Path">
+          <label>Network path (required)</label>
+        </textBox>
+        <textBox refId="DriveMapper_v2_Map_F_Name">
+          <label>Display name (optional)</label>
+        </textBox>
+        <checkBox refId="DriveMapper_v2_Map_F_Reconnect" defaultChecked="false">Reconnect at sign-in (Windows remembers the connection)</checkBox>
+      </presentation>
+      <presentation id="DriveMapper_v2_Map_G">
+        <textBox refId="DriveMapper_v2_Map_G_Path">
+          <label>Network path (required)</label>
+        </textBox>
+        <textBox refId="DriveMapper_v2_Map_G_Name">
+          <label>Display name (optional)</label>
+        </textBox>
+        <checkBox refId="DriveMapper_v2_Map_G_Reconnect" defaultChecked="false">Reconnect at sign-in (Windows remembers the connection)</checkBox>
+      </presentation>
+      <presentation id="DriveMapper_v2_Map_H">
+        <textBox refId="DriveMapper_v2_Map_H_Path">
+          <label>Network path (required)</label>
+        </textBox>
+        <textBox refId="DriveMapper_v2_Map_H_Name">
+          <label>Display name (optional)</label>
+        </textBox>
+        <checkBox refId="DriveMapper_v2_Map_H_Reconnect" defaultChecked="false">Reconnect at sign-in (Windows remembers the connection)</checkBox>
+      </presentation>
+      <presentation id="DriveMapper_v2_Map_I">
+        <textBox refId="DriveMapper_v2_Map_I_Path">
+          <label>Network path (required)</label>
+        </textBox>
+        <textBox refId="DriveMapper_v2_Map_I_Name">
+          <label>Display name (optional)</label>
+        </textBox>
+        <checkBox refId="DriveMapper_v2_Map_I_Reconnect" defaultChecked="false">Reconnect at sign-in (Windows remembers the connection)</checkBox>
+      </presentation>
+      <presentation id="DriveMapper_v2_Map_J">
+        <textBox refId="DriveMapper_v2_Map_J_Path">
+          <label>Network path (required)</label>
+        </textBox>
+        <textBox refId="DriveMapper_v2_Map_J_Name">
+          <label>Display name (optional)</label>
+        </textBox>
+        <checkBox refId="DriveMapper_v2_Map_J_Reconnect" defaultChecked="false">Reconnect at sign-in (Windows remembers the connection)</checkBox>
+      </presentation>
+      <presentation id="DriveMapper_v2_Map_K">
+        <textBox refId="DriveMapper_v2_Map_K_Path">
+          <label>Network path (required)</label>
+        </textBox>
+        <textBox refId="DriveMapper_v2_Map_K_Name">
+          <label>Display name (optional)</label>
+        </textBox>
+        <checkBox refId="DriveMapper_v2_Map_K_Reconnect" defaultChecked="false">Reconnect at sign-in (Windows remembers the connection)</checkBox>
+      </presentation>
+      <presentation id="DriveMapper_v2_Map_L">
+        <textBox refId="DriveMapper_v2_Map_L_Path">
+          <label>Network path (required)</label>
+        </textBox>
+        <textBox refId="DriveMapper_v2_Map_L_Name">
+          <label>Display name (optional)</label>
+        </textBox>
+        <checkBox refId="DriveMapper_v2_Map_L_Reconnect" defaultChecked="false">Reconnect at sign-in (Windows remembers the connection)</checkBox>
+      </presentation>
+      <presentation id="DriveMapper_v2_Map_M">
+        <textBox refId="DriveMapper_v2_Map_M_Path">
+          <label>Network path (required)</label>
+        </textBox>
+        <textBox refId="DriveMapper_v2_Map_M_Name">
+          <label>Display name (optional)</label>
+        </textBox>
+        <checkBox refId="DriveMapper_v2_Map_M_Reconnect" defaultChecked="false">Reconnect at sign-in (Windows remembers the connection)</checkBox>
+      </presentation>
+      <presentation id="DriveMapper_v2_Map_N">
+        <textBox refId="DriveMapper_v2_Map_N_Path">
+          <label>Network path (required)</label>
+        </textBox>
+        <textBox refId="DriveMapper_v2_Map_N_Name">
+          <label>Display name (optional)</label>
+        </textBox>
+        <checkBox refId="DriveMapper_v2_Map_N_Reconnect" defaultChecked="false">Reconnect at sign-in (Windows remembers the connection)</checkBox>
+      </presentation>
+      <presentation id="DriveMapper_v2_Map_O">
+        <textBox refId="DriveMapper_v2_Map_O_Path">
+          <label>Network path (required)</label>
+        </textBox>
+        <textBox refId="DriveMapper_v2_Map_O_Name">
+          <label>Display name (optional)</label>
+        </textBox>
+        <checkBox refId="DriveMapper_v2_Map_O_Reconnect" defaultChecked="false">Reconnect at sign-in (Windows remembers the connection)</checkBox>
+      </presentation>
+      <presentation id="DriveMapper_v2_Map_P">
+        <textBox refId="DriveMapper_v2_Map_P_Path">
+          <label>Network path (required)</label>
+        </textBox>
+        <textBox refId="DriveMapper_v2_Map_P_Name">
+          <label>Display name (optional)</label>
+        </textBox>
+        <checkBox refId="DriveMapper_v2_Map_P_Reconnect" defaultChecked="false">Reconnect at sign-in (Windows remembers the connection)</checkBox>
+      </presentation>
+      <presentation id="DriveMapper_v2_Map_Q">
+        <textBox refId="DriveMapper_v2_Map_Q_Path">
+          <label>Network path (required)</label>
+        </textBox>
+        <textBox refId="DriveMapper_v2_Map_Q_Name">
+          <label>Display name (optional)</label>
+        </textBox>
+        <checkBox refId="DriveMapper_v2_Map_Q_Reconnect" defaultChecked="false">Reconnect at sign-in (Windows remembers the connection)</checkBox>
+      </presentation>
+      <presentation id="DriveMapper_v2_Map_R">
+        <textBox refId="DriveMapper_v2_Map_R_Path">
+          <label>Network path (required)</label>
+        </textBox>
+        <textBox refId="DriveMapper_v2_Map_R_Name">
+          <label>Display name (optional)</label>
+        </textBox>
+        <checkBox refId="DriveMapper_v2_Map_R_Reconnect" defaultChecked="false">Reconnect at sign-in (Windows remembers the connection)</checkBox>
+      </presentation>
+      <presentation id="DriveMapper_v2_Map_S">
+        <textBox refId="DriveMapper_v2_Map_S_Path">
+          <label>Network path (required)</label>
+        </textBox>
+        <textBox refId="DriveMapper_v2_Map_S_Name">
+          <label>Display name (optional)</label>
+        </textBox>
+        <checkBox refId="DriveMapper_v2_Map_S_Reconnect" defaultChecked="false">Reconnect at sign-in (Windows remembers the connection)</checkBox>
+      </presentation>
+      <presentation id="DriveMapper_v2_Map_T">
+        <textBox refId="DriveMapper_v2_Map_T_Path">
+          <label>Network path (required)</label>
+        </textBox>
+        <textBox refId="DriveMapper_v2_Map_T_Name">
+          <label>Display name (optional)</label>
+        </textBox>
+        <checkBox refId="DriveMapper_v2_Map_T_Reconnect" defaultChecked="false">Reconnect at sign-in (Windows remembers the connection)</checkBox>
+      </presentation>
+      <presentation id="DriveMapper_v2_Map_U">
+        <textBox refId="DriveMapper_v2_Map_U_Path">
+          <label>Network path (required)</label>
+        </textBox>
+        <textBox refId="DriveMapper_v2_Map_U_Name">
+          <label>Display name (optional)</label>
+        </textBox>
+        <checkBox refId="DriveMapper_v2_Map_U_Reconnect" defaultChecked="false">Reconnect at sign-in (Windows remembers the connection)</checkBox>
+      </presentation>
+      <presentation id="DriveMapper_v2_Map_V">
+        <textBox refId="DriveMapper_v2_Map_V_Path">
+          <label>Network path (required)</label>
+        </textBox>
+        <textBox refId="DriveMapper_v2_Map_V_Name">
+          <label>Display name (optional)</label>
+        </textBox>
+        <checkBox refId="DriveMapper_v2_Map_V_Reconnect" defaultChecked="false">Reconnect at sign-in (Windows remembers the connection)</checkBox>
+      </presentation>
+      <presentation id="DriveMapper_v2_Map_W">
+        <textBox refId="DriveMapper_v2_Map_W_Path">
+          <label>Network path (required)</label>
+        </textBox>
+        <textBox refId="DriveMapper_v2_Map_W_Name">
+          <label>Display name (optional)</label>
+        </textBox>
+        <checkBox refId="DriveMapper_v2_Map_W_Reconnect" defaultChecked="false">Reconnect at sign-in (Windows remembers the connection)</checkBox>
+      </presentation>
+      <presentation id="DriveMapper_v2_Map_X">
+        <textBox refId="DriveMapper_v2_Map_X_Path">
+          <label>Network path (required)</label>
+        </textBox>
+        <textBox refId="DriveMapper_v2_Map_X_Name">
+          <label>Display name (optional)</label>
+        </textBox>
+        <checkBox refId="DriveMapper_v2_Map_X_Reconnect" defaultChecked="false">Reconnect at sign-in (Windows remembers the connection)</checkBox>
+      </presentation>
+      <presentation id="DriveMapper_v2_Map_Y">
+        <textBox refId="DriveMapper_v2_Map_Y_Path">
+          <label>Network path (required)</label>
+        </textBox>
+        <textBox refId="DriveMapper_v2_Map_Y_Name">
+          <label>Display name (optional)</label>
+        </textBox>
+        <checkBox refId="DriveMapper_v2_Map_Y_Reconnect" defaultChecked="false">Reconnect at sign-in (Windows remembers the connection)</checkBox>
+      </presentation>
+      <presentation id="DriveMapper_v2_Map_Z">
+        <textBox refId="DriveMapper_v2_Map_Z_Path">
+          <label>Network path (required)</label>
+        </textBox>
+        <textBox refId="DriveMapper_v2_Map_Z_Name">
+          <label>Display name (optional)</label>
+        </textBox>
+        <checkBox refId="DriveMapper_v2_Map_Z_Reconnect" defaultChecked="false">Reconnect at sign-in (Windows remembers the connection)</checkBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

@@ -1,251 +1,65 @@
-# DriveMapper (Intune / Registry-Driven Edition)
+# Halerith DriveMapper
 
-DriveMapper is a lightweight Windows utility for **policy-driven network drive mapping** on Entra ID–joined or hybrid devices, designed for **Microsoft Intune deployments**.
+Map network drives on Windows devices using policies delivered through Microsoft Intune.
 
-This fork replaces JSON / AD group–based configuration with **registry values delivered via Intune ADMX**, enabling modern, cloud-native drive mapping without logon scripts or Group Policy Preferences.
+A Windows service applies mappings in each signed-in user's session. It responds to sign-in, policy and network changes, keeping drives available without logon scripts or scheduled tasks.
 
----
+## Features
 
-## Architecture Overview
+- Configure drive letters, share paths, display names and reconnection settings.
+- Apply policy changes automatically and retry unavailable connections.
+- Install, update and uninstall through a setup window or silent commands.
 
-- **DriveMapper.exe**
-  - Runs in the context of the **logged-in user**
-  - Reads drive mapping configuration from registry policy keys
-  - Maps, remaps, or removes drives as required
-  - Logs all actions and errors to the Windows Application Event Log
+## Installation
 
-- **Install.exe**
-  - Copies files to a target directory
-  - Creates scheduled tasks (logon + network change)
-  - Creates the Event Log source used by DriveMapper
-  - Registers DriveMapper in Windows Apps & Features / Add or Remove Programs
-  - Fully uninstallable
-  - Designed for Intune Win32 deployment
+Download and extract the ZIP from [Releases](https://github.com/halerith/DriveMapper/releases/latest). Keep all three executables together and open `Install.exe`, or run elevated:
 
----
+| Action | Command |
+| --- | --- |
+| Install or update | `Install.exe -quiet -install` |
+| Uninstall | `Install.exe -quiet -uninstall` |
+| Uninstall and clear settings/logging data | `Install.exe -quiet -uninstall -force` |
 
-## Configuration Model (Intune / ADMX)
+The default location is `C:\Program Files\DriveMapper`. The same install command upgrades existing installations. Uninstalling leaves drive mappings unchanged.
 
-Drive mappings are controlled via **ADMX-backed registry policy** applied to **users** (not machines).
+## Intune deployment
 
-### Registry Locations
+Package these files as a Win32 app:
 
-For each drive letter (`A`–`Z`), DriveMapper reads:
+- `Install.exe`
+- `DriveMapper-Service.exe`
+- `DriveMapper-Agent.exe`
 
-#### User policy
-```
-HKCU\Software\Policies\DriveMapper\Drives\<LETTER>\
-```
+Use **System** install behavior and the commands above. Configure **3010** as a soft reboot code.
 
+For detection, use the **64-bit** registry key `HKEY_LOCAL_MACHINE\SOFTWARE\DriveMapper`, value **Version**, with a version comparison **greater than or equal to the release being installed**.
 
-### Supported Values
+## Drive configuration
 
-| Value Name | Type | Description |
-|-----------|------|-------------|
-| `Enabled` | DWORD (0/1) | Enables or disables the mapping |
-| `Path` | REG_SZ | UNC path (e.g. `\\server\\share`) |
-| `Name` | REG_SZ | Optional Explorer display name |
-| `Reconnect` | DWORD (0/1) | Persistent mapping |
+1. Import [DriveMapper_v2.admx](ADMX/DriveMapper_v2.admx) and [DriveMapper_v2.adml](ADMX/en-US/DriveMapper_v2.adml) into Intune.
+2. Create an imported administrative templates profile and enable the required drive-letter policies.
+3. Enter each UNC path, optional display name and reconnect setting, then assign the profile to users.
 
----
+Users need network access and permission to the shares. Allow approximately 60 seconds for policy changes. The templates are separate from the app ZIP; existing v1 profiles must be recreated using v2.
 
-## Runtime Behavior
-
-### Per-User Execution
-
-DriveMapper runs via **Scheduled Tasks registered for `BUILTIN\Users` with group logon**, meaning:
-
-- The task is created once, system-wide
-- At runtime, Windows executes it as the **currently logged-in user**
-- Each user receives **their own drive mappings**
-- Users do not affect each other, even on shared machines
-
----
-
-### Idempotent Mapping Logic
-
-For each drive letter:
-
-- If the drive is already mapped to the correct path → **skip**
-- If policy is enabled and the drive is mapped to a different path → **remap to the policy path**
-- If `Enabled=0` → **remove mapping if it still matches the previously applied path**
-- If policy no longer exists → **remove mapping if it still matches the previously applied path**
-
-Configured policy is authoritative for that drive letter. If policy enables a letter,
-DriveMapper will enforce the configured path even if the current mapping was created
-manually or by another tool.
-
-For cleanup scenarios, DriveMapper only removes drives it previously created, tracked
-per user under:
-
-```
-HKCU\Software\DriveMapper\State\AppliedDrives
-```
-
-This prevents accidental removal of user-managed drives when policy is disabled or
-removed for a drive letter. If a user or another tool changes a DriveMapper-applied
-letter before cleanup, DriveMapper deletes only its saved state and leaves the current
-mapping alone.
-
-If `Name` is configured, DriveMapper writes the Explorer display name for the mapped
-UNC path. If `Name` is later cleared in policy, DriveMapper clears the custom display
-name.
-
----
-
-## Logging
-
-All actions and errors are written to the **Windows Application Event Log**:
-
-- **Log:** Application
-- **Source:** `DriveMapper`
-
-Logged events include:
-- Drive mapped
-- Drive removed
-- Mapping skipped (already correct)
-- Configuration errors
-- Win32 API failures
-
-The Event Log source is created by the installer during install (admin required).
-
----
-
-## Installer (`Install.exe`)
-
-`Install.exe` is a standalone .NET 8 installer utility designed for Intune Win32 deployment.
-
-### Features
-
-- Copies files to a target directory (e.g. `Program Files`)
-- Registers scheduled tasks:
-  - On user logon
-  - On network profile change (VPN / Wi-Fi / Ethernet)
-- Runs DriveMapper **as the logged-in user**
-- Creates the `DriveMapper` Event Log source
-- Writes DriveMapper version info to HKLM for Intune detection
-- Registers an uninstall entry in Windows Apps & Features / Add or Remove Programs
-- Runs a GUI when launched without arguments
-- Runs silently when launched with command-line arguments
-- Add/Remove Programs launches the GUI; quiet uninstall remains available for management tools
-- Fully uninstallable
-
----
-
-## Installer Configuration (`install.config.json`)
-
-The installer includes a default `install.config.json` as an embedded asset, so no
-loose JSON file is required for normal installs. If an `install.config.json` file
-exists next to `Install.exe`, that adjacent file is used as an override. During
-install and repair, the effective config is written into the target install
-directory. During upgrade, the package config is reconciled with the currently
-installed config: existing values are kept, missing current keys are added, and
-keys no longer defined by the package config are removed.
-
-Example:
-
-```json
-{
-  "TargetDirectory": "C:\\Program Files\\DriveMapper",
-  "ExeName": "DriveMapper.exe",
-  "ShortcutName": "",
-  "ScheduledTasks": [
-    {
-      "TaskName": "DriveMapper",
-      "Arguments": "",
-      "CreateLogonTask": true,
-      "CreateNetworkTask": true,
-      "CreateBootTask": false
-    }
-  ]
-}
-```
-
-### Field Descriptions
-
-| Field | Description |
-|------|-------------|
-| `TargetDirectory` | Destination directory for binaries |
-| `ExeName` | Executable launched by scheduled tasks |
-| `ShortcutName` | Optional Start Menu shortcut |
-| `ScheduledTasks` | One or more task definitions |
-
-Version detection uses the file version of `DriveMapper.exe`, not a config value.
-
----
-
-## Installation & Uninstallation
-
-Run from an **elevated prompt**:
-
-Launching `Install.exe` without arguments opens the installer GUI. If elevation is
-required, the installer prompts for UAC before performing the selected action.
-
-### Install
-```powershell
-Install.exe install
-```
-
-### Upgrade
-```powershell
-Install.exe upgrade
-```
-
-### Repair
-```powershell
-Install.exe repair
-```
-
-### Uninstall
-```powershell
-Install.exe uninstall
-```
-
-When launched with arguments, the installer runs silently and returns an exit code.
-This is the recommended mode for Intune. The installer uses its embedded config by
-default. An explicit config path is supported only when you need an override, for
-example: `Install.exe install.config.json install`.
-
----
-
-## Intune Deployment (Win32 App)
-
-1. Publish binaries as **self-contained single-file executables**
-   - Recommended: run `.\build.ps1`
-2. Package:
-   - `Install.exe`
-   - `DriveMapper.exe`
-   - Optional `install.config.json` only if you need to override the embedded default
-3. Create `.intunewin` package
-4. Configure:
-   - **Install command:**  
-     `Install.exe install`
-   - **Uninstall command:**  
-     `Install.exe uninstall`
-   - **Detection rule:**  
-     HKLM `SOFTWARE\<ExeNameWithoutExtension>\Version`
-
-Assignments should typically target **users**, not devices.
-
----
+Disabling or withdrawing a policy removes its previously managed mapping. Changing or removing a drive can force a disconnect, including open files. Avoid overlapping v1/v2 policies for the same drive letter.
 
 ## Troubleshooting
 
-- Check registry policy:
-  ```powershell
-  Get-ChildItem HKCU:\Software\Policies\DriveMapper\Drives
-  ```
-- Check Event Viewer:
-  - Windows Logs → Application
-  - Source: **DriveMapper**
-- If drives don’t map immediately, wait for:
-  - Network change
-  - Next logon
+Check **Halerith DriveMapper** in Services. Mapping events appear in **Event Viewer → Windows Logs → Application**, source **DriveMapper**.
 
----
+Installer log: `%ProgramData%\DriveMapper\Logs\install.log`.
+
+## Building
+
+On Windows with a .NET 10 SDK (10.0.300 or newer):
+
+```powershell
+dotnet build DriveMapper.sln -c Release
+```
+
+Publish each project for `win-x64` to produce its self-contained executable.
 
 ## License
 
-GPL.  
-Original project by `icds250`.  
-This fork extends functionality for Intune / Entra ID environments.
+Maintained and substantially rewritten by Halerith. Originally based on [DriveMapper by icds250](https://github.com/icds250/DriveMapper). Licensed under [GNU GPLv3](LICENSE.txt).

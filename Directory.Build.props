@@ -1,0 +1,12 @@
+<Project>
+  <PropertyGroup>
+    <Version>2.1.0</Version>
+    <RuntimeFrameworkVersion>10.0.15</RuntimeFrameworkVersion>
+    <Company>Halerith</Company>
+    <Product>Halerith DriveMapper</Product>
+    <Copyright>Copyright Halerith</Copyright>
+    <AssemblyVersion>$(Version).0</AssemblyVersion>
+    <FileVersion>$(Version).0</FileVersion>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+</Project>
